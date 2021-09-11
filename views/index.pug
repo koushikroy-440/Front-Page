@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title Homepage
+    include bootstrap
+    script(src="javascript/index.js")
+  body(style="background:#F7FAFF")
+    div.container.py-2
+      nav.navbar.navbar-expand-sm
+        img(src="images/logo.svg" width="120")
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href="#"
+            data-target="#login-modal"
+            data-toggle="modal"
+            ) Log in
+          li.nav-item
+            a.nav-link.btn.px-3.ml-3(href="#" style="background:#377DFF;color:white" data-toggle="modal" data-target="#signUp-modal") Sign up
+      
+      div.my-5
+        h1.display-1 Leaderships
+        p AN APP TO HANDLE YOUR TEAMS
+        button.btn.mt-1(style="background:#377DFF;color:white") TRY DEMO
+        
+      img.float-right(src="images/communicating-men.svg" width="50%")
+      include signup
+      include login

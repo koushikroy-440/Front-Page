@@ -1,0 +1,52 @@
+div.modal.animate__animated.animate__fadeInDown#signUp-modal
+    div.modal-dialog.modal-lg.modal-dialog-centered
+        div.modal-content
+            div.modal-body.p-5
+                div.row
+                    div.col-md-6.d-flex.justify-content-center.align-item-center
+                        img(src="images/signup.svg", alt="signup" style="width:100%")
+                    div.col-md-6
+                        h1.display-4 Register now
+                        form#signUp-form
+                            div.form-group.mb-4
+                                input.form-control.p-4.company_name(
+                                    type="text"
+                                    name="company_name" 
+                                    placeholder="Company name"
+                                    required="required"
+                                    )
+                                span.text-danger.company_name_err
+                            div.form-group.mb-4
+                                input.form-control.p-4.email(
+                                    type="email" 
+                                    name="email" 
+                                    placeholder="email"
+                                    required="required"
+                                    )
+                                span.text-danger.email_err
+                            div.form-group.mb-4
+                                input.form-control.p-4(
+                                    type="mobile" 
+                                    name="mobile" 
+                                    placeholder="mobile"
+                                    required="required"
+                                    )
+
+                            div.form-group.mb-4
+                                input.form-control.p-4(
+                                    type="password" 
+                                    name="password" 
+                                    placeholder="password"
+                                    required="required"
+                                    )
+
+                            div.form-group.mb-4
+                                button.btn.btn-primary.text-light.submit-btn(
+                                    type="submit"
+                                ) sign up
+                                button.btn.btn-primary.disabled.before-send.d-none
+                                    span.spinner-grow.spinner-grow-sm.mr-2
+                                    span Processing..
+
+                            p already have an account ? 
+                                a( href="#")#request-login-modal login

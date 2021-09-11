@@ -1,0 +1,32 @@
+div.modal.animate__animated.animate__fadeInDown#login-modal
+    div.modal-dialog.modal-lg.modal-dialog-centered
+        div.modal-content
+            div.modal-body.p-5
+                div.row
+                    div.col-md-6.d-flex.justify-content-center.align-item-center
+                        img(src="images/signup.svg", alt="signup" style="width:100%")
+                    div.col-md-6
+                        h1.display-4 Welcome
+                        form#login-form
+                            div.form-group.mb-4
+                                input.form-control.p-4(
+                                    type="email" 
+                                    name="email" 
+                                    placeholder="email")
+
+
+                            div.form-group.mb-4
+                                input.form-control.p-4(
+                                    type="password" 
+                                    name="password" 
+                                    placeholder="password")
+
+                            div.form-group.mb-4
+                                button.btn.btn-primary.text-light.login-btn(
+                                    type="submit"
+                                ) login
+                                button.btn.btn-primary.disabled.before-send.d-none
+                                    span.spinner-grow.spinner-grow-sm.mr-2
+                                    span Processing..
+                            p new user ? 
+                                a(href="#")#request-signup-modal sign up
