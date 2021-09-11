@@ -13,7 +13,28 @@ router.post('/', async (req, res) => {
         api: '/api/private/company',
         data: token
     });
-    console.log(companyRes);
+    if(companyRes.body.isCompanyExist)
+    {
+        //get user password 
+        const query = {
+            body: {
+                uid : companyRes.body.data._id 
+            },
+            endpoint: req.get('origin'),
+            api: "/api/private/user",
+            iss: req.get('origin')+req.originalUrl
+        }
+        const uidToken = await tokenService.createCustomToken(query,expiresIn);
+        const passwordRes = await httpService.getRequest({
+            endpoint: req.get('origin'),
+            api: '/api/private/user',
+            data: uidToken
+        });
+        console.log(passwordRes);
+        
+    }else{
+        res.json(companyRes);
+    }
 });
 
 module.exports = router;

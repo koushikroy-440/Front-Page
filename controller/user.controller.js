@@ -1,5 +1,6 @@
 const tokenService = require("../services/token.service");
 const databaseService = require("../services/database.service");
+
 const create = async (req,res)=>{
     const token = tokenService.verify(req);
     if(token.isVerified)
@@ -27,6 +28,17 @@ const create = async (req,res)=>{
     }
 }
 
+const getUserPassword = async (req, res) => {
+    const token = await tokenService.verify(req);
+    if(token.isVerified){
+        console.log(token.data);
+    }else{
+        res.status(401);
+        res.json("message: permission denied !");
+
+    }
+}
 module.exports = {
     createUser: create,
+    getUserPassword: getUserPassword
 }
