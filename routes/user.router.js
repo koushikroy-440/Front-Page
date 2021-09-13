@@ -6,8 +6,7 @@ router.post('/',(req, res)=>{
 });
 
 router.get('/:query',(req, res)=>{
-    userController.getUserPassword(req, res);
-  
+     userController.getUserPassword(req, res);
 });
 
 module.exports = router;

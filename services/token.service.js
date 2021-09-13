@@ -35,11 +35,12 @@ const verify = (req)=>{
         token = req.headers['x-auth-token'];
     }
     else{
-        token = req.body.token
+        token = req.body.token;
     }
     if(token){
         try{
            const tmp = jwt.verify(token,secretKey);
+           console.log(tmp);
            const requestComingForm = tmp.iss;
            if(issService.indexOf(requestComingForm) != -1)
            {

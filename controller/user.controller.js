@@ -31,11 +31,25 @@ const create = async (req,res)=>{
 const getUserPassword = async (req, res) => {
     const token = await tokenService.verify(req);
     if(token.isVerified){
-        console.log(token.data);
+        const query = token.data;
+        const dataRes = await databaseService.getRecordByQuery(query,'user');
+        if(dataRes.length > 0){
+            res.status(200);
+            res.json({
+                isCompanyExist: true,
+                message: 'success',
+                data: dataRes
+            });
+        }else{
+            res.status(401);
+            res.json({
+                isCompanyExist: false,
+                message: 'company not found',
+            });
+        }
     }else{
         res.status(401);
         res.json("message: permission denied !");
-
     }
 }
 module.exports = {

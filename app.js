@@ -12,6 +12,7 @@ const loginRouter = require('./routes/login.router')
 const companyRouter = require('./routes/company.router');
 const tokenService = require("./services/token.service");
 const userRoute = require("./routes/user.router");
+const profileRoute = require("./routes/profile.router");
 const { application } = require('express');
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/',indexRouter);
 app.use('/api/signup',signupRouter);
 app.use('/api/login',loginRouter);
+app.use('/profile',profileRoute);
 
 //implementing api security
 app.use((req,res,next) => {

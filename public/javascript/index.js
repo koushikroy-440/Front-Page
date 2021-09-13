@@ -71,7 +71,9 @@ $(document).ready(()=>{
                 $(".login-btn").addClass("d-none");
             },
             success: (response)=>{
-                console.log(response);
+                if(response.isLogged){
+                    window.location = "/profile";
+                }
             },
             error: (error)=>{
                 console.log(error);
