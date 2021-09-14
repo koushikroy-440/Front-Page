@@ -51,11 +51,13 @@ router.post('/', async (req, res) => {
                 });
             }
         }else{
-            console.log(passwordRes);
+            res.status(passwordRes.status);
+            res.json(passwordRes.body);
         }
         
     }else{
-        res.json(companyRes);
+        res.status(companyRes.status);
+        res.json(companyRes.body);
     }
 });
 

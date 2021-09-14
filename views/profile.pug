@@ -1,1 +1,18 @@
-h1 welcome user
+doctype html
+html
+  head
+    title Homepage
+    include bootstrap
+    link(rel="stylesheet" href="stylesheets/profile.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
+    script(src="javascript/profile.js")
+  body(style="background:#F2F2F2")
+    div
+      div.sidenav.sidenav-open
+      div.section.section-open
+        nav.navbar.navbar-expand-sm.bg-white.px-3.py-2
+          button.btn.toggler
+            i.fa.fa-align-left
+          ul.navbar-nav.ml-auto
+            li.nav-item
+              a.nav-link(href="#") Testing

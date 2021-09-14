@@ -1,0 +1,55 @@
+.sidenav {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+    transition: 0.5s
+  }
+  
+  .sidenav-open {
+    width: 250px
+  }
+  
+  .sidenav-close {
+    width: 0
+  }
+  
+  .section {
+    transition: 0.5s
+  }
+  
+  .section-open {
+    margin-left: 250px
+  }
+  
+  .section-close {
+    margin-left: 0
+  }
+  
+  
+  button:focus {
+    outline: none !important;
+    box-shadow: none !important
+  }
+  
+  @media(max-width:768px)
+  {
+    .sidenav-open {
+      width: 0
+    }
+  
+    .sidenav-close {
+      width: 60px
+    }
+  
+    .section-open {
+      margin-left: 0
+    }
+  
+    .section-close {
+      margin-left: 60px
+    }
+  
+  }
+  

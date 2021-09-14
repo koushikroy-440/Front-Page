@@ -37,7 +37,6 @@ $(document).ready(()=>{
                 
                 if(data.isCompanyCreated){
                     //redirect user to profile page
-
                 }
                 else{
                     const field = "."+data.message.field;
@@ -76,7 +75,22 @@ $(document).ready(()=>{
                 }
             },
             error: (error)=>{
-                console.log(error);
+
+                $(".before-send").addClass("d-none");
+                $(".login-btn").removeClass("d-none");
+
+                if(error.status == 404) {
+                    $(".username").addClass('border border-danger');
+                    $('.username-err').html('user not found !');
+                }
+                else if(error.status = 401)
+                {
+                    $(".company-password").addClass("border border-danger");
+                    $(".password-err").html("incorrect password !")
+                }
+                else{
+                    alert('some thing went wrong please try after sometime later');
+                }
             }
         });
     });

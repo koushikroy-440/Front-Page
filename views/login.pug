@@ -12,14 +12,19 @@ div.modal.animate__animated.animate__fadeInDown#login-modal
                                 input.form-control.p-4(
                                     type="email" 
                                     name="email" 
-                                    placeholder="email")
-
+                                    placeholder="email"
+                                    class="username"
+                                    )
+                                    span.text-danger.username-err
 
                             div.form-group.mb-4
                                 input.form-control.p-4(
                                     type="password" 
                                     name="password" 
-                                    placeholder="password")
+                                    placeholder="password"
+                                    class="company-password"
+                                    )
+                                    span.text-danger.password-err
 
                             div.form-group.mb-4
                                 button.btn.btn-primary.text-light.login-btn(
