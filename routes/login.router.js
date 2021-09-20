@@ -37,7 +37,14 @@ router.post('/', async (req, res) => {
             if(isLogged){
                 const secondsInSevenDays = 64800;
                 const authToken = await tokenService.createCustomToken(query,secondsInSevenDays);
-                res.cookie("authToken",authToken);
+                //update token in database
+                const dbToken = await httpService.putRequest({
+                    endpoint: req.get('origin'),
+                    api: '/api/private/user',
+                    data: authToken
+                });
+                
+                res.cookie("authToken",authToken,{maxAge: secondsInSevenDays});
                 res.status(200);
                 res.json({
                     isLogged : true,

@@ -1,3 +1,9 @@
+//redirect user if already logged 
+
+if(document.cookie.indexOf("authToken") != -1) {
+    window.location = "/profile";
+}
+
 //request for login modal
 $(document).ready(()=>{
     $("#request-login-modal").click((e)=>{
@@ -81,7 +87,7 @@ $(document).ready(()=>{
 
                 if(error.status == 404) {
                     $(".username").addClass('border border-danger');
-                    $('.username-err').html('user not found !');
+                    $('.username-err').html('company not found !');
                 }
                 else if(error.status = 401)
                 {

@@ -29,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/',indexRouter);
 app.use('/api/signup',signupRouter);
 app.use('/api/login',loginRouter);
-app.use('/profile',profileRoute);
 
 //implementing api security
 app.use((req,res,next) => {
@@ -40,15 +39,14 @@ app.use((req,res,next) => {
   }
   else{
     //user not verified
-    res.status(401);
-    res.json({
-      message: 'permission denied',
-    });
+    res.clearCookie("authToken");
+    res.status(401); //token not verified
+    res.redirect("/");
   }
 });
 app.use('/api/private/company',companyRouter);
 app.use('/api/private/user',userRoute);
-
+app.use('/profile',profileRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -63,7 +61,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  //res.render('error');
+  res.send(err.message);
 });
 
 module.exports = app;

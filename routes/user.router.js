@@ -9,4 +9,8 @@ router.get('/:query',(req, res)=>{
      userController.getUserPassword(req, res);
 });
 
+router.get('/:id',(req, res)=>{
+    userController.createLog(req, res);
+});
+
 module.exports = router;

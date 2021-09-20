@@ -14,7 +14,15 @@ const getRequest = async (request)=>{
     return response;
 }
 
+const putRequest = async (request)=>{
+    const response = await ajax(request.endpoint)
+    .put(request.api+"/"+request.data)
+    .send({token:request.data})
+    return response;
+}
+
 module.exports = {
     postRequest: postRequest,
-    getRequest: getRequest
+    getRequest: getRequest,
+    putRequest: putRequest,
 }
