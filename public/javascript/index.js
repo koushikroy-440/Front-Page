@@ -78,6 +78,9 @@ $(document).ready(()=>{
             success: (response)=>{
                 if(response.isLogged){
                     window.location = "/profile";
+                }else{
+                    $(".company-password").addClass("border border-danger");
+                    $(".password-err").html("incorrect password !")
                 }
             },
             error: (error)=>{

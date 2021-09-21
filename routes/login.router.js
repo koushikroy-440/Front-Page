@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
             const userRealPassword = passwordRes.body.data[0].password;
             const isLogged = await bcryptService.decrypt(userRealPassword,req.body.password);
             if(isLogged){
-                const secondsInSevenDays = 64800;
+                const secondsInSevenDays = 64800; //7 days
                 const authToken = await tokenService.createCustomToken(query,secondsInSevenDays);
                 //update token in database
                 const dbToken = await httpService.putRequest({
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
                     data: authToken
                 });
                 
-                res.cookie("authToken",authToken,{maxAge: secondsInSevenDays});
+                res.cookie("authToken",authToken,{maxAge: (secondsInSevenDays*1000)});
                 res.status(200);
                 res.json({
                     isLogged : true,
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
                 res.status(401),
                 res.json({
                     isLogged: false,
-                    message: 'something went wrong'
+                    message: 'wrong password'
                 });
             }
         }else{

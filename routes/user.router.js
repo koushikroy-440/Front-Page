@@ -9,7 +9,7 @@ router.get('/:query',(req, res)=>{
      userController.getUserPassword(req, res);
 });
 
-router.get('/:id',(req, res)=>{
+router.put('/:id',(req, res)=>{
     userController.createLog(req, res);
 });
 

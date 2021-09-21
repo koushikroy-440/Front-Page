@@ -56,10 +56,25 @@ const getUserPassword = async (req, res) => {
 const createLog = async (req, res) => {
     const token = await tokenService.verify(req);
     if(token.isVerified){
-        console.log("Accepted");
+        const query = {
+            uid: token.data.uid,
+        };
+        const data = {
+            token: req.body.token,
+            expiresIn: 64800, // 7 days
+            isLogged: true,
+            updatedAt: Date.now()
+        };
+        const userRes = await databaseService.updateByQuery(query,'user',data);
+        res.status(201);
+        res.json({
+            message: "update success",
+        });
     }else{
         res.status(401);
-        res.json("message: permission denied !");
+        res.json({
+            message: "permission denied !"
+        });
     }
 }
 module.exports = {
