@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         api: "/api/private/company",
         data: token
     });
-    console.log(companyRes);
+    // console.log(companyRes);
     //requesting api user
     if(companyRes.body.isCompanyCreated)
     {
@@ -28,15 +28,18 @@ router.post('/', async (req, res) => {
             iss: req.get('origin')+req.originalUrl,
         };
         const userToken = await tokenService.createCustomToken(newUser,expiresIn);
-        const userRes = httpService.postRequest({
+        const userRes = await httpService.postRequest({
             endpoint: req.get('origin'),
             api: "/api/private/user",
             data: userToken
         });
-        //return res
+        //return user res
+        res.cookie("authToken",userRes.body.token,{maxAge: (86400*1000)});
+        res.status(userRes.status);
         res.send(userRes.body);
     }
     else{
+        res.status(companyRes.status);
         res.json(companyRes)
     }
 });

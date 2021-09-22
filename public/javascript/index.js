@@ -39,23 +39,27 @@ $(document).ready(()=>{
             success: (response)=>{
                 $(".before-send").addClass("d-none");
                 $(".submit-btn").removeClass("d-none");
-                const data = JSON.parse(response.text);
-                
-                if(data.isCompanyCreated){
-                    //redirect user to profile page
-                }
-                else{
-                    const field = "."+data.message.field;
-                    const message = data.message.label;
-                    $(field).addClass("border border-danger");
-                    $(field+"_err").html(message);
-                   setTimeout(() =>{
-                    resetValidator(field)
-                   },3000);
+                if(response.isUserCreated){
+                    window.location = "/profile";
                 }
             },
             error: (error)=>{
-                console.log(error);
+                $(".before-send").addClass("d-none");
+                $(".submit-btn").removeClass("d-none");
+                if(error.status == 409){
+                   const errorRes = JSON.parse(error.responseJSON.text);
+                   const message = errorRes.message;
+                   const field = "."+message.field;
+                    const label = message.label;
+                    $(field).addClass("border border-danger");
+                    $(field+"_err").html(label);
+                        setTimeout(() =>{
+                            resetValidator(field)
+                        },3000);
+                
+                }else{
+                    alert("Internal server error");
+                }
             }
         });
     });
@@ -112,6 +116,6 @@ $(document).ready(()=>{
 
 
 function resetValidator(field){
-    $("filed").removeClass("border border-danger");
+    $(field).removeClass("border border-danger");
     $(field+"_err").html("");
 }

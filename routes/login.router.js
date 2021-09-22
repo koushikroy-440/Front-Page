@@ -36,14 +36,14 @@ router.post('/', async (req, res) => {
 
         if(passwordRes.body.isCompanyExist){
             //allow single device login
-            if(passwordRes.body.data[0].isLogged)
-            {
-                res.status(406);
-                res.send({
-                    message: "please logout from another device"
-                });
-                return false;
-            }
+            // if(passwordRes.body.data[0].isLogged)
+            // {
+            //     res.status(406);
+            //     res.send({
+            //         message: "please logout from another device"
+            //     });
+            //     return false;
+            // }
             
             const userRealPassword = passwordRes.body.data[0].password;
             const isLogged = await bcryptService.decrypt(userRealPassword,req.body.password);
