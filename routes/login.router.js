@@ -14,9 +14,9 @@ router.post('/', async (req, res) => {
         api: '/api/private/company',
         data: token
     });
+        
     if(companyRes.body.isCompanyExist)
     {
-        //get user password 
         const query = {
             body: {
                 uid : companyRes.body.data[0]._id 
@@ -31,7 +31,20 @@ router.post('/', async (req, res) => {
             api: '/api/private/user',
             data: uidToken
         });
+
+        //get user password 
+
         if(passwordRes.body.isCompanyExist){
+            //allow single device login
+            if(passwordRes.body.data[0].isLogged)
+            {
+                res.status(406);
+                res.send({
+                    message: "please logout from another device"
+                });
+                return false;
+            }
+            
             const userRealPassword = passwordRes.body.data[0].password;
             const isLogged = await bcryptService.decrypt(userRealPassword,req.body.password);
             if(isLogged){

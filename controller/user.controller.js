@@ -55,6 +55,8 @@ const getUserPassword = async (req, res) => {
 
 const createLog = async (req, res) => {
     const token = await tokenService.verify(req);
+    // console.log("Akash:------"+token.data);
+    // console.log("Akash:------"+token.isVerified);
     if(token.isVerified){
         const query = {
             uid: token.data.uid,
@@ -79,5 +81,6 @@ const createLog = async (req, res) => {
 }
 module.exports = {
     createUser: create,
-    getUserPassword: getUserPassword
+    getUserPassword: getUserPassword,
+    createLog:createLog
 }

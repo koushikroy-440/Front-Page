@@ -13,6 +13,7 @@ const companyRouter = require('./routes/company.router');
 const tokenService = require("./services/token.service");
 const userRoute = require("./routes/user.router");
 const profileRoute = require("./routes/profile.router");
+const authController = require("./controller/auth.controller");
 const { application } = require('express');
 const app = express();
 
@@ -44,9 +45,21 @@ app.use((req,res,next) => {
     res.redirect("/");
   }
 });
+
+const autoLogger = ()=>{
+  return async (req,res,next)=>{ 
+    const isLogged = await authController.checkUserLog(req);
+    if(isLogged){
+      next();
+    }else{
+      res.clearCookie("authToken");
+      res.redirect("/");
+    }
+  }
+}
 app.use('/api/private/company',companyRouter);
 app.use('/api/private/user',userRoute);
-app.use('/profile',profileRoute);
+app.use('/profile',autoLogger(),profileRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

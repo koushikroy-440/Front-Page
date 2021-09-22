@@ -97,6 +97,11 @@ $(document).ready(()=>{
                     $(".company-password").addClass("border border-danger");
                     $(".password-err").html("incorrect password !")
                 }
+                else if(error.status = 406)
+                {
+                    $(".company-password").addClass("border border-danger");
+                    $(".password-err").html("please logout from other device");
+                }
                 else{
                     alert('some thing went wrong please try after sometime later');
                 }
