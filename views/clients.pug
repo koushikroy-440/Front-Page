@@ -1,0 +1,41 @@
+include profile
+  
+  block loadStyle
+    link(rel="stylesheet" href="stylesheets/clients.css")
+
+  block loadScript
+    script(src="javascript/clients.js")
+
+  block content
+    p.medium-font.p-0 Clients
+    div.card.container-fluid.border-none
+      div.card-body
+        div.row
+          div.col-md-3
+            input.form-control.input.remove-focus(placeholder="Search")
+          div.col-md-6
+          div.col-md-3.text-right
+            button.btn.btn-light.mr-4 Export
+            button.btn.btn-primary(data-toggle="modal" data-target="#clientModal") Add Client
+    div.modal.animate__animated.animate__slideInDown.animate__faster#clientModal
+      div.modal-dialog.modal-dialog-centered
+        div.modal-content.border-none
+          div.modal-body.px-4.py-4
+            h4.medium-font.mb-4 Client Details
+            form#addClientForm
+              div.form-group.mb-4
+                input.input.form-control.remove-focus(type="text" name="clientName" placeholder="Client name" required="required")
+                
+              div.form-group.mb-4
+                input.input.form-control.remove-focus(type="email" name="clientEmail" placeholder="Email id" required="required")
+                
+              div.form-group.mb-4
+                input.input.form-control.remove-focus#country(type="text" name="clientCountry" placeholder="Country" required="required")
+                
+              div.form-group.mb-4.d-flex
+                button.btn.btn-light.mr-2#code(type="button") +91
+                input.input.form-control.remove-focus(type="number" name="clientMobile" placeholder="Mobile" required="required")
+                
+              button.btn.btn-primary(type="submit") Submit
+                
+              

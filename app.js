@@ -15,6 +15,7 @@ const userRoute = require("./routes/user.router");
 const profileRoute = require("./routes/profile.router");
 const authController = require("./controller/auth.controller");
 const logoutRoute = require("./routes/logout.router");
+const clintRouter = require("./routes/clients.router");
 const { application } = require('express');
 const app = express();
 
@@ -61,6 +62,7 @@ const autoLogger = ()=>{
 app.use('/api/private/company',companyRouter);
 app.use('/api/private/user',userRoute);
 app.use('/logout',logoutRoute);
+app.use('/clients',clintRouter)
 app.use('/profile',autoLogger(),profileRoute);
 
 // catch 404 and forward to error handler

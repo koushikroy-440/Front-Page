@@ -45,7 +45,7 @@ const verify = (req)=>{
     if(token){
         try{
            const tmp = jwt.verify(token,secretKey);
-           console.log(tmp);
+        //    console.log(tmp);
            const requestComingForm = tmp.iss;
            if(issService.indexOf(requestComingForm) != -1)
            {
