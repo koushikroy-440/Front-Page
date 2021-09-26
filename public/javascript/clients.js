@@ -24,17 +24,31 @@ $(document).ready(function() {
     });
 });
 
-// request /clients api for store data
+// request clients api for store data
 $(document).ready(function(){
     $("#addClientForm").submit(async function(event){
         event.preventDefault();
+        const token = getCookie("authToken");
+        const formData = new FormData(this);
+        formData.append("token", token);
         const request = {
             type: "POST",
             url: "/clients",
-            data: new FormData(this)
+            data: formData,
+            isLoader: true,
+            commonBtn: ".add-client-submit",
+            loaderBtn: ".add-client-loader"
         }
-        const response = await ajax(request);
-        console.log(response);
+        try{
+             await ajax(request);
+             $("#clientModal").modal("hide");
+        }catch(err) {
+            $("#addClientEmail").addClass('animate__animated animate__shakeX text-danger');
+            $("#addClientEmail").click(function(){
+                $(this).removeClass('animate__animated animate__shakeX text-danger');
+                $(this).val('');
+            });
+        }
     });
 });
 
@@ -62,14 +76,42 @@ function ajax(request){
             url: request.url,
             data: request.type == 'GET' ? {} : request.data,
             processData: request.type == 'GET' ? true : false,
-            contentType: request.type == 'GET' ? 'application/json' : false, 
+            contentType: request.type == 'GET' ? 'application/json' : false,
+            beforeSend: function(){
+                if(request.isLoader){
+                    $(request.commonBtn).addClass('d-none');
+                    $(request.loaderBtn).removeClass('d-none');
+                }
+            },
             success: function(response){
+                if(request.isLoader){
+                    $(request.commonBtn).removeClass('d-none');
+                    $(request.loaderBtn).addClass('d-none');
+                }
                 resolve(response);
             },
             error: function(error){
+                if(request.isLoader){
+                    $(request.commonBtn).removeClass('d-none');
+                    $(request.loaderBtn).addClass('d-none');
+                }
                 reject(error);
             }
         });
     })
    
+}
+
+function getCookie(cookieName){
+    const allCookie = document.cookie;
+    let cookies = allCookie.split(";");
+    let cookieValue = "";
+    for(let cookie of cookies){
+        let currentCookie = cookie.split("=");
+        if(currentCookie[0] == cookieName){
+            cookieValue = currentCookie[1];
+            break;
+        }
+    }
+    return cookieValue;
 }

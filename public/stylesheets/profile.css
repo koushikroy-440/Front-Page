@@ -30,6 +30,13 @@
   letter-spacing: 0.5px
 }
 
+.btn-design {
+  border: none;
+  padding: 9px 18px;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.5px
+}
+
 .btn-light {
   background-color: #F5F5F5 !important;
   border: none;
@@ -103,6 +110,34 @@ button:focus {
   border-color: #ccc;
   transition: 0.5s
 }
+
+/* skelton loader */
+.skeleton {
+  position: relative;
+  overflow: hidden
+}
+
+.skeleton-loader {
+  width:80%;
+  height: 100%;
+  background: linear-gradient(to right,#f5f5f5,white,#f5f5f5);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  animation: loader linear 2s infinite
+}
+
+@keyframes loader {
+  from {
+    top: 0;
+    left: -100%;
+  },
+  to {
+    top: 0;
+    left: 0;
+  }
+}
+
 
 @media(max-width:768px)
 {

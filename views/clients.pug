@@ -4,11 +4,13 @@ include profile
     link(rel="stylesheet" href="stylesheets/clients.css")
 
   block loadScript
-    script(src="javascript/clients.js")
+    script(src="javascripts/clients.js")
 
   block content
+    - const skeleton = [0,1,2,3,4]
+
     p.medium-font.p-0 Clients
-    div.card.container-fluid.border-none
+    div.card.container-fluid.p-3.border-none
       div.card-body
         div.row
           div.col-md-3
@@ -17,6 +19,27 @@ include profile
           div.col-md-3.text-right
             button.btn.btn-light.mr-4 Export
             button.btn.btn-primary(data-toggle="modal" data-target="#clientModal") Add Client
+        table.table.my-4
+          tr
+            th Client
+            th Client
+            th Client
+            th Client
+            th Client
+            th Client
+          each data of skeleton
+            tr
+              td.py-3(colspan="6")
+                div.d-flex
+                  div.mr-3.d-flex.align-items-center
+                    div.skeleton#client-pic
+                      div.skeleton-loader
+                  div.d-flex.w-100.flex-column
+                    div.skeleton.mb-2#client-title
+                      div.skeleton-loader
+                    div.skeleton#client-subtitle
+                      div.skeleton-loader
+                  
     div.modal.animate__animated.animate__slideInDown.animate__faster#clientModal
       div.modal-dialog.modal-dialog-centered
         div.modal-content.border-none
@@ -24,18 +47,21 @@ include profile
             h4.medium-font.mb-4 Client Details
             form#addClientForm
               div.form-group.mb-4
-                input.input.form-control.remove-focus(type="text" name="clientName" placeholder="Client name" required="required")
+                input.input.form-control.remove-focus(type="text" name="clientName" placeholder="Client name" required="required" value="saurav")
                 
               div.form-group.mb-4
-                input.input.form-control.remove-focus(type="email" name="clientEmail" placeholder="Email id" required="required")
+                input.input.form-control.remove-focus#addClientEmail(type="email" name="clientEmail" placeholder="Email id" required="required" value="ersaurav08@gmail.com")
                 
               div.form-group.mb-4
-                input.input.form-control.remove-focus#country(type="text" name="clientCountry" placeholder="Country" required="required")
-                
+                input.input.form-control.remove-focus#country(type="text" name="clientCountry" placeholder="Country" required="required" value="india")
+                                
               div.form-group.mb-4.d-flex
                 button.btn.btn-light.mr-2#code(type="button") +91
-                input.input.form-control.remove-focus(type="number" name="clientMobile" placeholder="Mobile" required="required")
+                input.input.form-control.remove-focus(type="number" name="clientMobile" placeholder="Mobile" required="required" value="9199987267")
                 
-              button.btn.btn-primary(type="submit") Submit
+              button.btn.btn-primary.add-client-submit(type="submit") Submit
+              button.btn.btn-danger.btn-design.d-none.add-client-loader(disabled="disabled")
+                span.spinner-grow.spinner-grow-sm.mr-2
+                span Processing
                 
               
