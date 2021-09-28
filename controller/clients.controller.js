@@ -27,6 +27,55 @@ const create = async (req, res)=>{
     }
 }
 
+const countClients = async (req, res) => {
+    const tokenData = await tokenService.verify(req);
+    if(tokenData.isVerified){
+        const dataRes = await dbService.countData('client');
+        res.status(200);
+        res.json({ data:dataRes });
+    }else{
+        res.status(401);
+        res.json({message: 'permission denied !'});
+    }
+}
+
+const paginate = async (req, res) => {
+    const tokenData = await tokenService.verify(req);
+    if(tokenData.isVerified){
+        let from = Number(req.params.from);
+        let to = Number(req.params.to);
+        const dataRes = await dbService.paginate(from, to,'client');
+        res.status(200);
+        res.json({
+            data:dataRes
+        });
+    }else{
+        res.status(401);
+        res.json({
+            message: 'permission denied !'
+        });
+    }
+}
+
+const deleteClients = async (req, res) => {
+    const tokenData = await tokenService.verify(req);
+    if (tokenData.isVerified){
+        const id = req.params.id;
+        const dataRes = await dbService.deleteClients(id,'client');
+        res.status(200);
+        res.json({
+            data: dataRes
+        });
+    }else{
+        res.status(401);
+        res.json({
+             message: 'permission denied !' 
+        });
+    }
+}
 module.exports = {
     create: create,
+    countClients: countClients,
+    paginate: paginate,
+    deleteClients: deleteClients
 }

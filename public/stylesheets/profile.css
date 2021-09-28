@@ -7,6 +7,13 @@
   color: #181c32;
 }
 
+.small-font {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #323232;
+}
+
 .border-none {
   border: none !important
 }
@@ -23,7 +30,7 @@
 }
 
 .btn-primary {
-  background: #1F3E76 !important;
+  background: #00A3FF !important;
   border: none;
   padding: 9px 18px;
   font-family: 'Roboto', sans-serif;
@@ -110,6 +117,117 @@ button:focus {
   border-color: #ccc;
   transition: 0.5s
 }
+
+/* badges */
+.badge-primary {
+  background-color: #00A3FF !important;
+}
+
+.badge-secondary {
+  background-color: #E4E6EF !important;
+  color: #323232
+}
+
+.badge-success {
+  background-color: #50CD89 !important;
+}
+
+.badge-info {
+  background-color: #7239EA !important;
+}
+
+.badge-warning {
+  background-color: #FFC700 !important;
+}
+
+.badge-danger {
+  background-color: #F1416C !important;
+}
+
+.badge-dark {
+  background-color: #181C32 !important;
+}
+
+/* icon buttons */
+.icon-btn-primary {
+  background-color: #F1FAFF !important;
+  color: #00A3FF !important;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.icon-btn-success {
+  background-color: #E8FFF3 !important;
+  color: #5AD8D1 !important;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.icon-btn-info {
+  background-color: #F8F5FF !important;
+  color: #8339EA !important;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.icon-btn-warning {
+  background-color: #FFF8DD !important;
+  color: #FFC700 !important;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.icon-btn-danger {
+  background-color: #FFF5F8 !important;
+  color: #F1416C !important;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.icon-btn-dark {
+  background-color: #EFF2F5 !important;
+  color: #181C32 !important;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+
 
 /* skelton loader */
 .skeleton {

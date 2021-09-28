@@ -40,8 +40,10 @@ $(document).ready(function(){
             loaderBtn: ".add-client-loader"
         }
         try{
-             await ajax(request);
+             const client = await ajax(request);
              $("#clientModal").modal("hide");
+                dynamicTr(client.data);
+                clientAction();
         }catch(err) {
             $("#addClientEmail").addClass('animate__animated animate__shakeX text-danger');
             $("#addClientEmail").click(function(){
@@ -52,6 +54,104 @@ $(document).ready(function(){
     });
 });
 
+//show clients
+$(document).ready(function() {
+    let from = 0;
+    let to = 5;
+    showClients(from, to);
+})
+
+async function showClients(from, to) {
+    const request = {
+        type: 'GET',
+        url: `/clients/${from}/${to}`,
+        isLoader: true,
+        commonBtn: '.temp',
+        loaderBtn: '.client-skeleton',
+    }
+    const response = await ajax(request);
+    // console.log(response);
+    if(response.data.length > 0) {
+        for(let client of response.data) {
+            const tr = dynamicTr(client);
+        }
+        clientAction();
+    }else{
+        alert('client not found');
+    }
+}
+
+function dynamicTr(client) {
+    const tr = `
+    <tr class='animate__animated animate__fadeIn'>
+        <td>
+            <div class='d-flex'>
+                <i class='fa fa-user-circle mr-3' style='font-size: 45px'></i>
+                <div>
+                    <p class='p-0 m-0 text-capitalize'>${client.clientName}</p>
+                    <small class='text-uppercase'>${client.clientCountry}</small>
+                <div>
+            </div>
+        </td>
+        <td>
+            ${client.clientEmail}
+        </td>
+
+        <td>
+            ${client.clientMobile}
+        </td>
+        <td>
+            <span class='badge badge-danger'>offline</span>
+        </td>
+        <td>
+            ${client.updatedAt}
+        </td>
+        <td>
+            <div class='d-flex'>
+                <button class='icon-btn-primary mr-3 edit-client' data-id='${client._id}'>
+                    <i class='fa fa-edit'></i>
+                </button>
+
+                <button class='icon-btn-danger mr-3 delete-client' data-id='${client._id}'>
+                    <i class='fa fa-trash'></i>
+                </button>
+
+                <button class='icon-btn-info mr-3 share-client' data-id='${client._id}'>
+                    <i class='fa fa-share-alt'></i>
+                </button>
+            </div>
+        </td>
+    </tr>`;
+    $(".table").append(tr);
+
+    return tr;
+}
+
+function clientAction(){
+    //delete clients
+    $(document).ready(function(){
+        $(".delete-client").each(function(){
+            const tr = this.parentElement.parentElement.parentElement;
+            $(this).click(async function(){
+                const id = $(this).attr("data-id");
+                const token = getCookie("authToken");
+                const request = {
+                    type: 'DELETE',
+                    url: '/clients/' + id,
+                    data: {
+                        token : token,
+                    }
+                }
+                const dataRes = await ajax(request);
+                $(tr).removeClass('animate__animated animate__fadeIn');
+                $(tr).addClass('animate__animated animate__fadeOut');
+                setTimeout(() =>{
+                    $(tr).remove();
+                },500);
+            });
+        });
+    });
+}
 
 
 function checkInLs(key){
@@ -71,12 +171,10 @@ function checkInLs(key){
 
 function ajax(request){
     return new Promise((resolve, reject) => {
-        $.ajax({
+        let option = {
             type: request.type,
             url: request.url,
-            data: request.type == 'GET' ? {} : request.data,
-            processData: request.type == 'GET' ? true : false,
-            contentType: request.type == 'GET' ? 'application/json' : false,
+            
             beforeSend: function(){
                 if(request.isLoader){
                     $(request.commonBtn).addClass('d-none');
@@ -97,7 +195,17 @@ function ajax(request){
                 }
                 reject(error);
             }
-        });
+        }
+
+        if(request.type == 'POST' || request.type == 'PUT'){
+            option['data'] = request.data;
+            option['processData'] = false;
+            option['contentType'] = false;
+        }
+        if(request.type == 'DELETE'){
+            option['data'] = request.data;
+        }
+        $.ajax(option);
     })
    
 }

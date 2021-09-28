@@ -4,7 +4,7 @@ include profile
     link(rel="stylesheet" href="stylesheets/clients.css")
 
   block loadScript
-    script(src="javascripts/clients.js")
+    script(src="javascript/clients.js")
 
   block content
     - const skeleton = [0,1,2,3,4]
@@ -19,7 +19,7 @@ include profile
           div.col-md-3.text-right
             button.btn.btn-light.mr-4 Export
             button.btn.btn-primary(data-toggle="modal" data-target="#clientModal") Add Client
-        table.table.my-4
+        table.table.my-4.p-4
           tr
             th Client
             th Client
@@ -28,7 +28,7 @@ include profile
             th Client
             th Client
           each data of skeleton
-            tr
+            tr.d-none.client-skeleton
               td.py-3(colspan="6")
                 div.d-flex
                   div.mr-3.d-flex.align-items-center
@@ -47,17 +47,17 @@ include profile
             h4.medium-font.mb-4 Client Details
             form#addClientForm
               div.form-group.mb-4
-                input.input.form-control.remove-focus(type="text" name="clientName" placeholder="Client name" required="required" value="saurav")
+                input.input.form-control.remove-focus(type="text" name="clientName" placeholder="Client name" required="required" )
                 
               div.form-group.mb-4
-                input.input.form-control.remove-focus#addClientEmail(type="email" name="clientEmail" placeholder="Email id" required="required" value="ersaurav08@gmail.com")
+                input.input.form-control.remove-focus#addClientEmail(type="email" name="clientEmail" placeholder="Email id" required="required" )
                 
               div.form-group.mb-4
-                input.input.form-control.remove-focus#country(type="text" name="clientCountry" placeholder="Country" required="required" value="india")
+                input.input.form-control.remove-focus#country(type="text" name="clientCountry" placeholder="Country" required="required" )
                                 
               div.form-group.mb-4.d-flex
                 button.btn.btn-light.mr-2#code(type="button") +91
-                input.input.form-control.remove-focus(type="number" name="clientMobile" placeholder="Mobile" required="required" value="9199987267")
+                input.input.form-control.remove-focus(type="number" name="clientMobile" placeholder="Mobile" required="required" )
                 
               button.btn.btn-primary.add-client-submit(type="submit") Submit
               button.btn.btn-danger.btn-design.d-none.add-client-loader(disabled="disabled")
