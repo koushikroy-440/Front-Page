@@ -82,6 +82,9 @@ async function showClients(from, to) {
 }
 
 function dynamicTr(client) {
+    let clientString = JSON.stringify(client);
+    let clientData = clientString.replace(/"/g,"'");
+    console.log(clientData);
     const tr = `
     <tr class='animate__animated animate__fadeIn'>
         <td>
@@ -108,7 +111,7 @@ function dynamicTr(client) {
         </td>
         <td>
             <div class='d-flex'>
-                <button class='icon-btn-primary mr-3 edit-client' data-id='${client._id}'>
+                <button class='icon-btn-primary mr-3 edit-client' data-id='${client._id}' data-client='${clientData}'>
                     <i class='fa fa-edit'></i>
                 </button>
 
@@ -123,7 +126,6 @@ function dynamicTr(client) {
         </td>
     </tr>`;
     $(".table").append(tr);
-
     return tr;
 }
 
@@ -148,6 +150,19 @@ function clientAction(){
                 setTimeout(() =>{
                     $(tr).remove();
                 },500);
+            });
+        });
+    });
+
+    //edit client
+    $(document).ready(function() {
+        $(".edit-client").each(function() {
+            $(this).click(function() {
+                const id = $(this).attr('data-id');
+                const clientString = $(this).data('client');
+                clientString.replace(/'/g,'"');
+                console.log(clientString);
+                $("#clientModal").modal('show');
             });
         });
     });
