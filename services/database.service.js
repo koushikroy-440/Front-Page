@@ -17,40 +17,46 @@ const schemaList = {
 }
 mongo.connect(url, options);
 
-const createRecord = async (data,schema) => {
+const createRecord = async (data, schema) => {
     const currentSchema = schemaList[schema];
     const collection = new currentSchema(data);
     const dataRes = await collection.save();
     return dataRes;
 }
 
-const getRecordByQuery = async (query,schema) => {
+const getRecordByQuery = async (query, schema) => {
     const currentSchema = schemaList[schema];
     const dataRes = await currentSchema.find(query);
     return dataRes;
 }
 
-const updateByQuery = async (query,schema,data) => {
+const updateByQuery = async (query, schema, data) => {
     const currentSchema = schemaList[schema];
-    const dataRes = await currentSchema.update(query,data);
+    const dataRes = await currentSchema.update(query, data);
     return dataRes;
 }
 
-const countData = async (schema)=>{
+const countData = async (schema) => {
     const currentSchema = schemaList[schema];
     const dataRes = await currentSchema.countDocuments();
     return dataRes;
 }
 
-const paginate = async (from,to,schema) => {
+const paginate = async (from, to, schema) => {
     const currentSchema = schemaList[schema];
     const dataRes = await currentSchema.find().skip(from).limit(to);
     return dataRes;
 }
 
-const deleteClients = async (id,schema) => {
+const deleteClients = async (id, schema) => {
     const currentSchema = schemaList[schema];
     const dataRes = await currentSchema.findByIdAndDelete(id);
+    return dataRes;
+}
+
+const updateClients = async (id, data, schema) => {
+    const currentSchema = schemaList[schema];
+    const dataRes = await currentSchema.findByIdAndUpdate(id, data, { new: true });
     return dataRes;
 }
 
@@ -60,5 +66,6 @@ module.exports = {
     updateByQuery: updateByQuery,
     countData: countData,
     paginate: paginate,
-    deleteClients: deleteClients
+    deleteClients: deleteClients,
+    updateClients: updateClients
 }
