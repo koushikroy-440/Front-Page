@@ -398,14 +398,16 @@ $(document).ready(function () {
 });
 
 
-function controlPrevAndNext(currentBtn) {
-    const totalBtn = $(".pagination-btn").length - 1;
-    if (totalBtn == currentBtn) {
+function controlPrevAndNext(currentIndex) {
+    const totalBtn = $(".paginate-btn").length - 1;
+    if (currentIndex == totalBtn) {
         $("#next").prop("disabled", true);
-    } else if (currentBtn > 0) {
+    }
+    else if (currentIndex > 0) {
         $("#prev").prop("disabled", false);
-    } else {
-        $("#next").prop("disabled", false);
+    }
+    else {
         $("#prev").prop("disabled", true);
+        $("#next").prop("disabled", false);
     }
 }
