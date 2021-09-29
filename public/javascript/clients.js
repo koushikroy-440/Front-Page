@@ -106,6 +106,16 @@ $(document).ready(function () {
 });
 
 async function showClients(from, to) {
+    $("table").html(`
+        <tr>
+            <th>Client</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    `);
     const request = {
         type: "GET",
         url: `/clients/${from}/${to}`,
@@ -327,14 +337,75 @@ async function getPaginationLink() {
     const totalClient = response.data;
     let length = totalClient / 5;
     let i;
-    if (Number.isInteger(length)) {
-        for (let i = 1; i <= length; i++) {
-            let li = ` <li class="page-item"><a class="page-link" href="#">${i}</a></li>`;
-            $("#client-pagination").append(li);
-        }
+    let dataSkip = 0;
+    if (length.toString().indexOf(".") != -1) {
+        length = length + 1;
+    }
+    for (i = 1; i <= length; i++) {
+        let button = `
+        <button class="btn border pagination-btn ${i == 1 ? 'active' : ''}" data-skip="${dataSkip}">${i}</button>
+        `;
+        $("#client-pagination").append(button);
+        dataSkip += 5;
+    }
+    getPaginationButton();
+}
+
+function getPaginationButton() {
+    $(".pagination-btn").each(function (index) {
+        $(this).click(() => {
+            const dataSkip = $(this).data("skip");
+            removeClass("active");
+            $(this).addClass("active");
+            showClients(dataSkip, 5);
+            controlPrevAndNext(index);
+        });
+    });
+}
+
+function removeClass(className) {
+    $("." + className).each(function () {
+        $(this).removeClass(className);
+    });
+}
+
+//pagination next control
+$(document).ready(function () {
+    $("#next").click(function () {
+        let currentIndex = 0;
+        $(".pagination-btn").each(function () {
+            if ($(this).hasClass("active")) {
+                currentIndex = $(this).index();
+            }
+        });
+        $(".pagination-btn").eq(currentIndex + 1).click();
+        controlPrevAndNext(currentIndex + 1);
+    });
+});
+
+//pagination prev control
+$(document).ready(function () {
+    $("#prev").click(function () {
+        let currentIndex = 0;
+        $(".pagination-btn").each(function () {
+            if ($(this).hasClass("active")) {
+                currentIndex = $(this).index();
+            }
+        });
+        $(".pagination-btn").eq(currentIndex - 1).click();
+        controlPrevAndNext(currentIndex - 1);
+    });
+});
+
+
+function controlPrevAndNext(currentBtn) {
+    const totalBtn = $(".pagination-btn").length - 1;
+    if (totalBtn == currentBtn) {
+        $("#next").prop("disabled", true);
+    } else if (currentBtn > 0) {
+        $("#prev").prop("disabled", false);
     } else {
-        // let number = Math.round(length);
-        // console.log(number);
-        alert("yes");
+        $("#next").prop("disabled", false);
+        $("#prev").prop("disabled", true);
     }
 }

@@ -39,8 +39,11 @@ include profile
                       div.skeleton-loader
                     div.skeleton#client-subtitle
                       div.skeleton-loader
-        ul.pagination
-          li.page-item#client-pagination
+        div.btn-group.float-right
+          button.btn.border#prev(disabled = true) prev
+          div.btn-group#client-pagination
+          button.btn.border#next next
+          
                      
     div.modal.animate__animated.animate__slideInDown.animate__faster#clientModal
       div.modal-dialog.modal-dialog-centered
