@@ -198,7 +198,7 @@ function dynamicTr(client) {
           <div class="d-flex align-items-center">
             <i class="fa fa-user-circle mr-3" style="font-size:45px"></i>
             <div>
-              <p class="p-0 m-0 text-capitalize">${client.clientName}</p>
+              <p class="p-0 m-0 text-capitalize client-name">${client.clientName}</p>
               <small class="text-uppercase">${client.clientCountry}</small>
             </div>
           </div>
@@ -410,4 +410,39 @@ function controlPrevAndNext(currentIndex) {
         $("#prev").prop("disabled", true);
         $("#next").prop("disabled", false);
     }
+}
+
+//control filter
+$(document).ready(function () {
+    filterByName();
+    $(".filter-btn").click(function () {
+        if ($(".filter").hasClass(".filter-by-name")) {
+            $(".filter").removeClass(".filter-by-name");
+            $(".filter").addClass(".filter-by-email");
+            $(".filter").attr("placeholder", "Search by email");
+        } else {
+            $(".filter").removeClass(".filter-by-email");
+            $(".filter").addClass(".filter-by-name");
+            $(".filter").attr("placeholder", "Search by name");
+        }
+    });
+});
+
+//filter by name
+
+function filterByName() {
+    $(".filter-by-name").on("input", function () {
+        let tr = "";
+        let keyword = $(this).val().toLowerCase();
+        $(".client-name").each(function () {
+            let clientName = $(this).html().toLowerCase();
+            if (clientName.indexOf(keyword) == -1) {
+                tr = $(this).parent().parent().parent().parent();
+                $(tr).addClass("d-none");
+            } else {
+                tr = $(this).parent().parent().parent().parent();
+                $(tr).removeClass("d-none");
+            }
+        });
+    });
 }

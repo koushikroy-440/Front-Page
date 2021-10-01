@@ -13,9 +13,12 @@ include profile
     div.card.container-fluid.p-3.border-none
       div.card-body
         div.row
-          div.col-md-3
-            input.form-control.input.remove-focus(placeholder="Search")
-          div.col-md-6
+          div.col-md-4
+            div.d-flex.align-items-center
+              button.btn.icon-btn-info.mr-3.filter-btn
+                i.fa.fa-cog.fa-spin 
+              input.form-control.input.remove-focus.filter.filter-by-name(placeholder="Search by name")
+          div.col-md-5
           div.col-md-3.text-right
             button.btn.btn-light.mr-4 Export
             button.btn.btn-primary#add-client-btn Add Client
