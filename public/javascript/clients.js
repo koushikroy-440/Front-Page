@@ -203,7 +203,7 @@ function dynamicTr(client) {
             </div>
           </div>
         </td>
-        <td>
+        <td class="client-email">
           ${client.clientEmail}
         </td>
         <td>
@@ -420,6 +420,7 @@ $(document).ready(function () {
             $(".filter").removeClass(".filter-by-name");
             $(".filter").addClass(".filter-by-email");
             $(".filter").attr("placeholder", "Search by email");
+            filterByEmail();
         } else {
             $(".filter").removeClass(".filter-by-email");
             $(".filter").addClass(".filter-by-name");
@@ -435,12 +436,31 @@ function filterByName() {
         let tr = "";
         let keyword = $(this).val().toLowerCase();
         $(".client-name").each(function () {
-            let clientName = $(this).html().toLowerCase();
+            let clientName = $(this).html().trim().toLowerCase();
             if (clientName.indexOf(keyword) == -1) {
                 tr = $(this).parent().parent().parent().parent();
                 $(tr).addClass("d-none");
             } else {
                 tr = $(this).parent().parent().parent().parent();
+                $(tr).removeClass("d-none");
+            }
+        });
+    });
+}
+
+//filter by email
+
+function filterByEmail() {
+    $(".filter-by-email").on("input", function () {
+        let tr = "";
+        let keyword = $(this).val().trim().toLowerCase();
+        $(".client-email").each(function () {
+            let clientEmail = $(this).html().toLowerCase();
+            if (clientEmail.indexOf(keyword) == -1) {
+                tr = $(this).parent();
+                $(tr).addClass("d-none");
+            } else {
+                tr = $(this).parent();
                 $(tr).removeClass("d-none");
             }
         });
