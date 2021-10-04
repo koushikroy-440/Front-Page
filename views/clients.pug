@@ -71,4 +71,20 @@ include profile
               button.btn.btn-danger.btn-design.d-none.add-client-loader(disabled="disabled")
                 span.spinner-grow.spinner-grow-sm.mr-2
                 span Processing
+    div.modal.animate__animated.animate__slideInDown.animate__faster#shareModal
+      div.modal-dialog.modal-dialog-centered
+        div.modal-content.border-none
+          div.modal-body.px-4.py-4
+            h4.medium-font.mb-4 Share Link
+            div.form-group.mb-4
+              input.input.form-control.remove-focus.link(type="text" name="link" required="required")
+            div.form-group.mb-4.d-flex
+              button.btn.icon-btn-info.mr-4.copy-link
+                i.fa.fa-copy 
+              button.btn.icon-btn-warning.mr-4.share-on-email
+                i.fa.fa-envelope 
+              button.btn.icon-btn-success.share-on-message
+                img(src="images/whatsapp.png")
+            div.progressive-loading
+              div.moving-progress
               

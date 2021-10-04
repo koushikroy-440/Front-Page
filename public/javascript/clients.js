@@ -186,6 +186,64 @@ function clientAction() {
             });
         });
     });
+
+    //open share modal
+    $(document).ready(function () {
+        $(".share-client").click(function () {
+            const clientId = $(this).data('id');
+            const clientEmail = $(this).data('email');
+            $(".share-on-email").attr('data-email', clientEmail);
+            let link = `${window.location}/invitation/${clientId}`;
+            $(".link").val(link);
+            $("#shareModal").modal('show');
+        });
+    });
+
+    //prevent change link
+    $(document).ready(function () {
+        $(".link").on("keydown", function () {
+            return false;
+        });
+    });
+
+    //copy link
+    $(document).ready(function () {
+        $(".copy-link").click(function () {
+            const linkInput = document.querySelector(".link");
+            linkInput.select();
+            document.execCommand('copy');
+            $("i", this).removeClass("fa fa-copy");
+            $("i", this).removeClass("fa fa-check");
+            setTimeout(() => {
+                $("i", this).removeClass("fa fa-check");
+                $("i", this).addClass("fa fa-copy");
+            }, 2000);
+        });
+    });
+
+    //share on email
+    $(document).ready(function () {
+        $(".share-on-email").click(async function () {
+            const clientEmail = $(this).data('email');
+            const token = getCookie("authToken");
+            const formData = new FormData();
+            formData.append("token", token);
+            formData.append("subject", "Business Invitation");
+            formData.append("message", $(".link").val());
+            formData.append("to", clientEmail);
+            const request = {
+                type: "POST",
+                url: "/sendmail",
+                data: formData,
+            }
+            try {
+                const response = await ajax(request);
+                console.log(response);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+    });
 }
 
 function dynamicTr(client) {
@@ -225,7 +283,7 @@ function dynamicTr(client) {
               <i class="fa fa-trash"></i>
             </button>
   
-            <button class="icon-btn-info share-client" data-id="${client._id}">
+            <button class="icon-btn-info share-client" data-id="${client._id}" data-email="${client.clientEmail}">
               <i class="fa fa-share-alt"></i>
             </button>
           </div>
@@ -430,7 +488,6 @@ $(document).ready(function () {
 });
 
 //filter by name
-
 function filterByName() {
     $(".filter-by-name").on("input", function () {
         let tr = "";
@@ -466,3 +523,4 @@ function filterByEmail() {
         });
     });
 }
+
