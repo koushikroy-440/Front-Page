@@ -1,28 +1,52 @@
-const nodemailer = require("nodemailer");
 const pug = require("pug");
+const AWS = require("aws-sdk");
+const config = {
+    accessKeyId: "AKIA2QE56KF5HU6JVWXU",
+    secretAccessKey: "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",
+    region: "ap-south-1"
+}
+const mailer = new AWS.SES(config);
+
 const tokenService = require("../services/token.service");
 const sendEmail = async (req, res) => {
     const token = await tokenService.verify(req);
     if (token.isVerified) {
         const data = req.body;
-        const transporter = nodemailer.createTransport({
-            host: "gmail",
-            auth: {
-                user: 'koushikand440@gmail.com',
-                pass: 'koushik@akash@123',
+        const emailInfo = {
+            Destination: {
+                ToAddresses: [
+                    data.to
+                ]
             },
-        });
-
-        const mailOptions = {
-            from: 'koushikand440@gmail.com',
-            to: data.to,
-            subject: 'testing',
-            html: 'koshik',
+            Message: {
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: data.subject
+                },
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: pug.renderFile("C:/Users/DELL/OneDrive/Desktop/node/frontPage/views/email-template.pug", {
+                            link: data.message
+                        })
+                    }
+                }
+            },
+            Source: "koushikand440@gmail.com",
         }
-        let info = await transporter.sendMail(mailOptions);
-        res.json({
-            message: info
-        });
+        try {
+            await mailer.sendEmail(emailInfo).promise();
+            res.status(200);
+            res.json({
+                message: "Sending success"
+            });
+        }
+        catch (error) {
+            res.status(424);
+            res.json({
+                message: "Sending failed"
+            });
+        }
 
     } else {
         res.status(401);
