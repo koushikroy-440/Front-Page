@@ -29,3 +29,39 @@ $(document).ready(function () {
   $(".company-email").html(company.email);
   $(".company-mobile").html(company.mobile);
 });
+
+//upload logo
+$(document).ready(function () {
+  $(".uploader").toast('show');
+  $(".logo-box").click(function () {
+    const ext = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp"
+    ];
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.click();
+
+    input.onchange = async function () {
+      const file = input.files[0];
+      //show uploader
+      $(".file-name").html(file.name);
+      $(".uploader").removeClass('d-none');
+      $(".uploader").addClass('animate__animated animated__slideInLeft');
+      $(".uploader").toast('show');
+      if (ext.indexOf(file.type) != -1) {
+        const objectUrl = await uploadFileOnS3(file);
+        $(".logo-box").html('');
+        $(".logo-box").css({
+          background: `url(${objectUrl})`,
+          backgroundSize: 'cover',
+        });
+      } else {
+        alert("upload a valid file");
+      }
+    }
+  });
+});

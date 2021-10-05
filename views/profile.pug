@@ -5,6 +5,7 @@ html
     include bootstrap
     link(rel="stylesheet" href="stylesheets/profile.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
+    script(src="https://sdk.amazonaws.com/js/aws-sdk-2.985.0.min.js")
     script(src="javascript/profile.js")
     script(src="javascript/common.js")
 
@@ -30,6 +31,7 @@ html
                 button.btn.toolbar.ml-3.p-0(class=menu.design)
                   a.nav-link(href=menu.link class=menu.design)
                     i(class=menu.icon)
+        include toast
         div.px-4.py-3
           block content
 

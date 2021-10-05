@@ -1,3 +1,13 @@
+const config = {
+    accessKeyId: "AKIA2QE56KF5HU6JVWXU",
+    secretAccessKey: "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",
+    region: "ap-south-1",
+    params: {
+        Bucket: "docs.frontpage.koushikroy.org"
+    }
+}
+
+const s3 = new AWS.S3(config);
 function ajax(request) {
     return new Promise(function (resolve, reject) {
         let options = {
@@ -78,4 +88,32 @@ function decodeToken(token) {
     let string = atob(playLoad);
     let dataObject = JSON.parse(string);
     return dataObject;
+}
+
+//upload file on AWS bucket
+async function uploadFileOnS3(file) {
+    const fileInfo = {
+        Key: file.name,
+        Body: file,
+        ACL: "public-read"
+    }
+    try {
+        const object = await s3.upload(fileInfo)
+            .on("httpUploadProgress", (progress) => {
+                let loaded = progress.loaded;
+                let total = progress.total;
+                let percentage = Math.floor((loaded * 100) / total);
+                $(".progress-width").css({ width: percentage + "%" });
+                $(".progress-text").html(percentage + "%");
+
+                // calculate mb
+                let totalMb = (total / 1024 / 1024).toFixed(1);
+                let loadedMb = (loaded / 1024 / 1024).toFixed(1);
+                $(".progress-in-mb").html(loadedMb + "Mb / " + totalMb + "Mb");
+            })
+            .promise();
+        return object.Location;
+    } catch (err) {
+        return err;
+    }
 }
