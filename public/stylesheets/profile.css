@@ -64,7 +64,8 @@
   top: 0;
   left: 0;
   background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
-  transition: 0.5s
+  transition: 0.5s;
+  overflow-x: hidden
 }
 
 .sidenav-open {
@@ -76,7 +77,8 @@
 }
 
 .section {
-  transition: 0.5s
+  transition: 0.5s;
+  overflow-x: hidden
 }
 
 .section-open {
@@ -162,6 +164,13 @@ button:focus {
   align-items: center
 }
 
+.icon-btn-primary:hover {
+  color: #F1FAFF !important;
+  background-color: #00A3FF !important;
+  transition: 1s
+}
+
+
 .icon-btn-success {
   background-color: #E8FFF3 !important;
   color: #5AD8D1 !important;
@@ -173,6 +182,12 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center
+}
+
+.icon-btn-success:hover {
+  color: #E8FFF3 !important;
+  background-color: #5AD8D1 !important;
+  transition: 1s
 }
 
 .icon-btn-info {
@@ -188,6 +203,12 @@ button:focus {
   align-items: center
 }
 
+.icon-btn-info:hover {
+  color: #F8F5FF !important;
+  background-color: #8339EA !important;
+  transition: 1s
+}
+
 .icon-btn-warning {
   background-color: #FFF8DD !important;
   color: #FFC700 !important;
@@ -199,6 +220,12 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center
+}
+
+.icon-btn-warning:hover {
+  color: #FFF8DD !important;
+  background-color: #FFC700 !important;
+  transition: 1s
 }
 
 .icon-btn-danger {
@@ -214,6 +241,12 @@ button:focus {
   align-items: center
 }
 
+.icon-btn-danger:hover {
+  color: #FFF5F8 !important;
+  background-color: #F1416C !important;
+  transition: 1s
+}
+
 .icon-btn-dark {
   background-color: #EFF2F5 !important;
   color: #181C32 !important;
@@ -225,6 +258,12 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center
+}
+
+.icon-btn-dark:hover {
+  color: #EFF2F5 !important;
+  background-color: #181C32 !important;
+  transition: 1s
 }
 
 
@@ -284,6 +323,20 @@ button:focus {
   overflow: hidden
 }
 
+.upload-progress {
+  width: 100%;
+  height: 5px;
+  background-color: #F8F5FF;
+  overflow: hidden
+}
+
+.upload-progress-bar {
+  width: 0%;
+  height: 100%;
+  background-color: #8339EA !important;
+  position: relative;
+}
+
 .moving-progress {
   width: 60%;
   height: 100%;
@@ -299,4 +352,12 @@ button:focus {
   100% {
     left: 100%
   }
+}
+
+.logo-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: white
 }

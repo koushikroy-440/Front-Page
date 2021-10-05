@@ -6,12 +6,20 @@ html
     link(rel="stylesheet" href="stylesheets/profile.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
     script(src="javascript/profile.js")
+    script(src="javascript/common.js")
+
     block loadScript
     block loadStyle
   body(style="background:#F2F2F2")
-    - const toolbar = [{label:"Clients",icon:"fas fa-user-secret",link:"/clients"},{label:"Teams",icon:"fas fa-users",link:"/teams"},{label:"Logout",icon:"fa fa-sign-out-alt",link:"/logout"}]
+    - const toolbar = [{label:"Notifications",icon:"fa fa-bell",link:"/notifications",design:"icon-btn-dark"},{label:"Clients",icon:"fas fa-user-secret",link:"/clients",design:"icon-btn-primary"},{label:"Teams",icon:"fas fa-users",link:"/teams",design:"icon-btn-warning"},{label:"Setting",icon:"fa fa-cog",link:"/setting",design:"icon-btn-info"},{label:"Logout",icon:"fa fa-sign-out-alt",link:"/logout",design:"icon-btn-danger"}]
     div
       div.sidenav.sidenav-open
+        div.d-flex.flex-column.align-items-center.my-4.overflow-hidden
+          button.logo-box.mb-3 
+            i.fa.fa-building(style="font-size:35px")
+          h5.company-name.p-0.m-0.text-white.text-capitalize 
+          p.company-email.p-0.m-0.text-light 
+          p.company-mobile.p-0.m-0.text-light
       div.section.section-open
         nav.navbar.navbar-expand-sm.bg-white.px-3.py-2
           button.btn.toggler
@@ -19,8 +27,8 @@ html
           ul.navbar-nav.ml-auto
             each menu of toolbar
               li.nav-item
-                button.btn.toolbar.ml-2.p-0
-                  a.nav-link(href=menu.link)
+                button.btn.toolbar.ml-3.p-0(class=menu.design)
+                  a.nav-link(href=menu.link class=menu.design)
                     i(class=menu.icon)
         div.px-4.py-3
           block content
