@@ -9,7 +9,8 @@ const create = async (req, res) => {
              * auto login after signup
              */
             const uidJson = {
-                uid: token.data.uid
+                uid: token.data.uid,
+                companyInfo: token.data.companyInfo,
             }
             const endpoint = req.get('origin') || "http://" + req.get('host');
             const option = {

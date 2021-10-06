@@ -28,6 +28,13 @@ $(document).ready(function () {
   $(".company-name").html(company.company_name);
   $(".company-email").html(company.email);
   $(".company-mobile").html(company.mobile);
+  if (company.isLogo) {
+    $(".logo-box").html('');
+    $(".logo-box").css({
+      background: `url(${company.logoUrl})`,
+      backgroundSize: 'cover',
+    });
+  }
 });
 
 //upload logo
@@ -47,6 +54,7 @@ $(document).ready(function () {
 
     input.onchange = async function () {
       const file = input.files[0];
+      const imageUrl = URL.createObjectURL(file);
       //show uploader
       $(".file-name").html(file.name);
       $(".uploader").removeClass('d-none');
@@ -54,14 +62,42 @@ $(document).ready(function () {
       $(".uploader").toast('show');
       if (ext.indexOf(file.type) != -1) {
         const objectUrl = await uploadFileOnS3(file);
-        $(".logo-box").html('');
-        $(".logo-box").css({
-          background: `url(${objectUrl})`,
-          backgroundSize: 'cover',
-        });
+        const isLogo = await updateLogoUrl(objectUrl);
+        if (isLogo) {
+          $(".logo-box").html('');
+          $(".logo-box").css({
+            background: `url(${imageUrl})`,
+            backgroundSize: 'cover',
+          });
+        } else {
+          alert('unable to upload profile picture');
+        }
       } else {
         alert("upload a valid file");
       }
     }
   });
 });
+
+//update user logo and request company api 
+async function updateLogoUrl(url) {
+  const token = getCookie("authToken");
+  const company = decodeToken(token);
+  const id = company.data.uid;
+  const formData = new FormData();
+  formData.append("isLogo", true);
+  formData.append("logoUrl", url);
+  formData.append("token", token);
+
+  const request = {
+    type: "PUT",
+    url: "/api/private/company/" + id,
+    data: formData
+  }
+  try {
+    await ajax(request);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}

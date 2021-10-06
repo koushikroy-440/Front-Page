@@ -10,51 +10,56 @@ const companySchema = new Schema({
         unique: true,
     },
     mobile: Number,
-    emailVerified:{
+    emailVerified: {
         type: Boolean,
         default: false,
     },
-    mobileVerified:{
+    mobileVerified: {
         type: Boolean,
         default: false
     },
-    createdAt:{
+    isLogo: {
+        type: Boolean,
+        default: false
+    },
+    logoUrl: String,
+    createdAt: {
         type: Date,
         default: Date.now
     }
 });
 
 //unique key validation for company name
-companySchema.pre('save',async function(next){
+companySchema.pre('save', async function (next) {
     const query = {
         company_name: this.company_name
     }
     const length = await mongo.model("Company").countDocuments(query);
-    if(length > 0){
+    if (length > 0) {
         const companyErr = {
             label: "Company name already exists",
             field: "company_name",
         }
         throw next(companyErr);
-    }else{
+    } else {
         next();
     }
 });
 
 //unique key validation for email
-companySchema.pre('save',async function(next){
+companySchema.pre('save', async function (next) {
     const query = {
         company_name: this.email
     }
     const length = await mongo.model("Company").countDocuments(query);
-    if(length > 0){
+    if (length > 0) {
         const emailErr = {
             label: "Company email already exists",
             filed: "email",
         }
         throw next(emailErr);
-    }else{
+    } else {
         next();
     }
 });
-module.exports = mongo.model('Company',companySchema);
+module.exports = mongo.model('Company', companySchema);
