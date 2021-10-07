@@ -42,9 +42,9 @@ const countData = async (schema) => {
     return dataRes;
 }
 
-const paginate = async (from, to, schema) => {
+const paginate = async (query, from, to, schema) => {
     const currentSchema = schemaList[schema];
-    const dataRes = await currentSchema.find().skip(from).limit(to);
+    const dataRes = await currentSchema.find(query).skip(from).limit(to);
     return dataRes;
 }
 

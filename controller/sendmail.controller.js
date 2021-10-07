@@ -11,7 +11,7 @@ const tokenService = require("../services/token.service");
 const sendEmail = async (req, res) => {
     const token = await tokenService.verify(req);
     if (token.isVerified) {
-        const data = req.body;
+        var data = JSON.parse(req.body.receipt);
         const emailInfo = {
             Destination: {
                 ToAddresses: [
@@ -26,9 +26,7 @@ const sendEmail = async (req, res) => {
                 Body: {
                     Html: {
                         Charset: "UTF-8",
-                        Data: pug.renderFile("C:/Users/DELL/OneDrive/Desktop/node/frontPage/views/email-template.pug", {
-                            link: data.message
-                        })
+                        Data: pug.renderFile("C:/Users/DELL/OneDrive/Desktop/node/frontPage/views/email-template.pug", data)
                     }
                 }
             },

@@ -4,10 +4,7 @@ const { Schema } = mongo;
 const clientSchema = new Schema({
     companyId: String,
     clientName: String,
-    clientEmail: {
-        type: String,
-        unique: true,
-    },
+    clientEmail: String,
     clientCountry: String,
     clientMobile: Number,
     createdAt: {
@@ -20,4 +17,18 @@ const clientSchema = new Schema({
     }
 });
 
-module.exports = mongo.model("client",clientSchema);
+//unique data validation 
+clientSchema.pre('save', function (next) {
+    const query = {
+        companyId: this.companyId,
+        clientEmail: this.clientEmail
+    }
+    let length = await mongo.model('client').countDocuments(query);
+    if (length == 0) {
+        next();
+    } else {
+        next('duplicate client email');
+    }
+});
+
+module.exports = mongo.model("client", clientSchema);

@@ -64,20 +64,21 @@ const updateCompanyData = async (req, res) => {
     if (token.isVerified) {
         const id = req.params.id;
         const data = req.body;
+        console.log(data);
         try {
             const dataRes = await dbService.updateClients(id, data, 'company');
             const newToken = await refreshToken(req, id, dataRes);
-            res.cookie("authToken", newToken);
-            res.status(200);
-            res.send({
-                message: 'update success !',
-                data: dataRes,
+            res.cookie("authToken", newToken, { maxAge: (86400 * 1000) });
+            res.status(201);
+            res.json({
+                message: "Update success",
+                data: dataRes
             });
         } catch (err) {
             res.status(424);
             res.send({
                 message: 'update failed !',
-
+                data: err
             });
         }
 
@@ -88,7 +89,7 @@ const updateCompanyData = async (req, res) => {
         });
     }
 }
-const refreshToken = async (req, data, dataRes) => {
+const refreshToken = async (req, id, dataRes) => {
     data = {
         uid: id,
         companyInfo: dataRes
@@ -101,7 +102,7 @@ const refreshToken = async (req, data, dataRes) => {
         body: data,
         endpoint: endpoint,
         originalUrl: req.originalUrl,
-        iss: endpoint + req.originalUrl,
+        iss: endpoint + "/api/private/company"
     }
     const expiresIn = 86400;
     const newToken = await tokenService.createCustomToken(option, expiresIn);

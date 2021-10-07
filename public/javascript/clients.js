@@ -54,6 +54,8 @@ function addClient() {
         try {
             const dataRes = await ajax(request);
             const client = dataRes.data;
+            //prevent from multiple submit
+            $(".add-client-form").unbind();
             $("#clientModal").modal('hide');
             const tr = dynamicTr(client);
             $("table").append(tr);
@@ -226,19 +228,33 @@ function clientAction() {
         $(".share-on-email").click(async function () {
             const clientEmail = $(this).data('email');
             const token = getCookie("authToken");
+            const tokenData = decodeToken(token);
+            const company = tokenData.data.companyInfo;
             const formData = new FormData();
             formData.append("token", token);
-            formData.append("subject", "Business Invitation");
-            formData.append("message", $(".link").val());
-            formData.append("to", clientEmail);
+            const receipt = {
+                to: clientEmail,
+                subject: "Business Invitation",
+                message: "Thank you being the part of our business. we are happy to serve our services for you.",
+                companyName: company.company_name,
+                companyMobile: company.mobile,
+                companyEmail: company.email,
+                invitationLink: $(".link").val(),
+                companyLogo: company.logoUrl
+            }
+            let string = JSON.stringify(receipt);
+            formData.append("receipt", string);
             const request = {
                 type: "POST",
                 url: "/sendmail",
                 data: formData,
+                isLoader: true,
+                commonBtn: ".tmp",
+                loaderBtn: ".progressive-loading",
             }
             try {
                 const response = await ajax(request);
-                console.log(response);
+                $("#shareModal").modal('hide');
             } catch (e) {
                 console.error(e);
             }

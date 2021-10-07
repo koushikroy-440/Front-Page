@@ -44,7 +44,10 @@ const paginate = async (req, res) => {
     if (tokenData.isVerified) {
         let from = Number(req.params.from);
         let to = Number(req.params.to);
-        const dataRes = await dbService.paginate(from, to, 'client');
+        const query = {
+            companyId: tokenData.data.uid,
+        };
+        const dataRes = await dbService.paginate(query, from, to, 'client');
         res.status(200);
         res.json({
             data: dataRes
