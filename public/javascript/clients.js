@@ -128,6 +128,11 @@ async function showClients(from, to) {
     const response = await ajax(request);
     // console.log(response);
     if (response.data.length > 0) {
+
+        //* store client data in localStorage for export to pdf
+
+        let currentClients = JSON.stringify(response.data);
+        sessionStorage.setItem("current-clients", currentClients);
         for (let client of response.data) {
             const tr = dynamicTr(client);
             $("table").append(tr);
@@ -140,7 +145,7 @@ async function showClients(from, to) {
 }
 
 function clientAction() {
-    // delete clients
+    //* delete clients
     $(document).ready(function () {
         $(".delete-client").each(function () {
             $(this).click(async function () {
@@ -165,7 +170,7 @@ function clientAction() {
         });
     });
 
-    // edit clients
+    //* edit clients
     $(document).ready(function () {
         $(".edit-client").each(function () {
             $(this).click(function () {
@@ -189,7 +194,7 @@ function clientAction() {
         });
     });
 
-    //open share modal
+    //* open share modal
     $(document).ready(function () {
         $(".share-client").click(function () {
             const clientId = $(this).data('id');
@@ -201,14 +206,14 @@ function clientAction() {
         });
     });
 
-    //prevent change link
+    //* prevent change link
     $(document).ready(function () {
         $(".link").on("keydown", function () {
             return false;
         });
     });
 
-    //copy link
+    //* copy link
     $(document).ready(function () {
         $(".copy-link").click(function () {
             const linkInput = document.querySelector(".link");
@@ -223,7 +228,7 @@ function clientAction() {
         });
     });
 
-    //share on email
+    //* share client profile link on email
     $(document).ready(function () {
         $(".share-on-email").click(async function () {
             const clientEmail = $(this).data('email');
@@ -327,7 +332,7 @@ function checkInLs(key) {
 }
 
 
-//get pagination link
+//* get pagination link
 
 async function getPaginationLink() {
     const request = {
@@ -370,7 +375,7 @@ function removeClass(className) {
     });
 }
 
-//pagination next control
+//* pagination next control
 $(document).ready(function () {
     $("#next").click(function () {
         let currentIndex = 0;
@@ -413,7 +418,7 @@ function controlPrevAndNext(currentIndex) {
     }
 }
 
-//control filter
+//* control filter
 $(document).ready(function () {
     filterByName();
     $(".filter-btn").click(function () {
@@ -430,7 +435,7 @@ $(document).ready(function () {
     });
 });
 
-//filter by name
+//* filter by name
 function filterByName() {
     $(".filter-by-name").on("input", function () {
         let tr = "";
@@ -448,7 +453,7 @@ function filterByName() {
     });
 }
 
-//filter by email
+//* filter by email
 
 function filterByEmail() {
     $(".filter-by-email").on("input", function () {
@@ -467,3 +472,41 @@ function filterByEmail() {
     });
 }
 
+/**
+ * * export all client data to pdf format
+ */
+$(document).ready(function () {
+    $("#current").click(async function (event) {
+        event.preventDefault();
+        let currentClients = sessionStorage.getItem("current-clients");
+        if (currentClients != null) {
+            let clients = JSON.parse(currentClients);
+            let formData = new FormData();
+            formData.append("data", clients);
+            formData.append("token", getCookie('authToken'));
+            const request = {
+                type: "POST",
+                url: "/export-to-pdf",
+                data: formData
+            }
+            try {
+                const response = await ajax(request);
+                const downloadRequest = {
+                    type: "GET",
+                    url: "/exports/new.pdf"
+                }
+                const pdfFile = await ajaxDownloader(downloadRequest);
+                const pdfUrl = URL.createObjectURL(pdfFile);
+                const a = document.createElement("a");
+                a.href = pdfUrl;
+                a.download = "new.pdf";
+                a.click();
+                a.remove();
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            alert('no clients data found');
+        }
+    });
+})

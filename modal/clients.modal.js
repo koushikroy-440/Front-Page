@@ -18,7 +18,7 @@ const clientSchema = new Schema({
 });
 
 //unique data validation 
-clientSchema.pre('save', function (next) {
+clientSchema.pre('save', async function (next) {
     const query = {
         companyId: this.companyId,
         clientEmail: this.clientEmail

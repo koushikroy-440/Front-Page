@@ -17,6 +17,7 @@ const authController = require("./controller/auth.controller");
 const logoutRoute = require("./routes/logout.router");
 const clintRouter = require("./routes/clients.router");
 const sendmailRouter = require("./routes/sendmail.router");
+const exporterRouter = require("./routes/exporter.router");
 const { application } = require('express');
 const app = express();
 
@@ -34,7 +35,7 @@ app.use('/', indexRouter);
 app.use('/api/signup', signupRouter);
 app.use('/api/login', loginRouter);
 
-//implementing api security
+// !implementing api security
 app.use((req, res, next) => {
   const token = tokenService.verify(req);
   if (token.isVerified) {
@@ -66,6 +67,7 @@ app.use('/logout', logoutRoute);
 app.use('/clients', clintRouter);
 app.use('/profile', autoLogger(), profileRoute);
 app.use('/sendmail', sendmailRouter);
+app.use('/export-to-pdf', exporterRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

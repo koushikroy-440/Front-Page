@@ -19,8 +19,12 @@ include profile
                 i.fa.fa-cog.fa-spin 
               input.form-control.input.remove-focus.filter.filter-by-name(placeholder="Search by name")
           div.col-md-5
-          div.col-md-3.text-right
-            button.btn.btn-light.mr-4 Export
+          div.col-md-3.d-flex
+            div.dropdown
+              button.btn.btn-light.mr-4.dropdown-toggle(data-toggle="dropdown") Export
+              div.dropdown-menu.mt-2
+                a(href="#").dropdown-item#current Current 
+                a(href="#").dropdown-item#all All
             button.btn.btn-primary#add-client-btn Add Client
         table.table.my-4.p-4
           tr

@@ -117,3 +117,15 @@ async function uploadFileOnS3(file) {
         return err;
     }
 }
+
+function ajaxDownloader(request) {
+    return $.ajax({
+        type: request.type,
+        url: req.url,
+        xhr: function () {
+            const xml = new XMLHttpRequest();
+            xml.responseType = 'blob';
+            return xml;
+        }
+    }).promise();
+}
