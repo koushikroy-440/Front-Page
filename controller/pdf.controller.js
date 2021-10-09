@@ -1,10 +1,15 @@
 const Pdf = require("pdfkit-table");
 const fs = require("fs");
 const crypto = require("crypto");
-const random = crypto.randomBytes(4).toString('hex');
+let random = crypto.randomBytes(4).toString('hex');
+const tokenService = require("../services/token.service");
 
-const pdf = (req, res) => {
+const pdf = async (req, res) => {
     let pdfFile = "public/exports/" + random + ".pdf";
+    let commingData = req.body;
+    let pdfData = JSON.parse(commingData.data);
+    const tokenData = await tokenService.verify(req);
+    const company = tokenData.data.companyInfo;
 
     const doc = new Pdf({
         margin: 30,
@@ -13,24 +18,74 @@ const pdf = (req, res) => {
 
     doc.pipe(fs.createWriteStream(pdfFile));
 
-    doc.text("Testing");
+    doc.fontSize(18);
+
+    doc.text(company.company_name, {
+        align: "center"
+    });
+
+    doc.moveDown();
+
+    const table = {
+        title: "Clients Report",
+        headers: [
+            {
+                label: "Client name",
+                property: "clientName",
+                width: 100
+            },
+            {
+                label: "Country",
+                property: "country",
+                width: 100
+            },
+            {
+                label: "Email",
+                property: "email",
+                width: 150
+            },
+            {
+                label: "Mobile",
+                property: "mobile",
+                width: 100
+            },
+            {
+                label: "Joined at",
+                property: "joinedAt",
+                width: 100
+            }
+        ],
+        datas: []
+    }
+
+    for (let data of pdfData) {
+        table.datas.push({
+            clientName: data.clientName,
+            country: data.clientCountry,
+            email: data.clientEmail,
+            mobile: data.clientMobile,
+            joinedAt: data.createdAt
+        });
+    }
+
+    doc.table(table, { width: 300 });
 
     doc.end();
 
-    response.status(200);
-    response.json({
+    res.status(200);
+    res.json({
         message: "Success",
-        fileName: random + ".pdf"
+        filename: random + ".pdf"
     });
 }
 
 const deletePdf = (req, res) => {
-    const fileName = "public/exports/" + req.params.fileName;
-    fs.unlinkSync(fileName);
+    let filename = "public/exports/" + req.params.filename;
+    fs.unlinkSync(filename);
     res.status(200);
-    res.send({
-        message: "delete success",
-    });
+    res.json({
+        message: "success"
+    })
 }
 
 module.exports = {

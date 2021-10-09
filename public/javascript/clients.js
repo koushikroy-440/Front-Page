@@ -482,31 +482,31 @@ $(document).ready(function () {
         e.preventDefault();
         let currentClients = sessionStorage.getItem("current-clients");
         if (currentClients != null) {
-            let clients = JSON.parse(currentClients);
-            const formData = new FormData();
-            formData.append("data", clients);
-            formData.append("token", getCookie("authToken"));
+            const formdata = new FormData();
+            formdata.append("data", currentClients);
+            formdata.append("token", getCookie("authToken"));
             const request = {
                 type: "POST",
                 url: "/export-to-pdf",
-                data: formData
+                data: formdata
             }
             try {
                 const response = await ajax(request);
                 console.log(response);
+
                 const downloadRequest = {
                     type: "GET",
-                    url: "/exports/" + response.fileName
+                    url: "/exports/" + response.filename
                 }
 
                 const pdfFile = await ajaxDownloader(downloadRequest);
                 const pdfUrl = URL.createObjectURL(pdfFile);
                 const a = document.createElement("a");
                 a.href = pdfUrl;
-                a.download = response.fileName;
+                a.download = response.filename;
                 a.click();
                 a.remove();
-                deleteFile(response.fileName);
+                deletePdf(response.filename);
             }
             catch (err) {
                 console.log(err);
@@ -519,11 +519,11 @@ $(document).ready(function () {
     });
 });
 
-async function deleteFile(fileName) {
+async function deletePdf(filename) {
     const token = getCookie("authToken");
     const request = {
         type: "DELETE",
-        url: "/export-to-pdf" + fileName,
+        url: "/export-to-pdf/" + filename,
         data: {
             token: token
         }

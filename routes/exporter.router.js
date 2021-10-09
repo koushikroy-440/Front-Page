@@ -1,13 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const pdfController = require('../controller/pdf.controller');
+const exportController = require("../controller/pdf.controller");
 
-router.post('/', (req, res) => {
-    pdfController.pdf(req, res);
+router.post("/", (req, res) => {
+    exportController.pdf(req, res);
 });
 
-router.delete('/:pdfName', (req, res) => {
-    pdfController.deletePdf(req, res);
+router.delete("/:filename", (req, res) => {
+    exportController.deletePdf(req, res);
 });
 
 module.exports = router;

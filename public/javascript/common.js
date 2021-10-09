@@ -126,7 +126,7 @@ function ajaxDownloader(request) {
         url: request.url,
         xhr: function () {
             const xml = new XMLHttpRequest();
-            xml.responseType = 'blob';
+            xml.responseType = "blob";
             return xml;
         }
     }).promise();
