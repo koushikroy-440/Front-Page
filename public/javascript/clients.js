@@ -222,9 +222,9 @@ function clientAction() {
             linkInput.select();
             document.execCommand('copy');
             $("i", this).removeClass("fa fa-copy");
-            $("i", this).removeClass("fa fa-check");
+            $("i", this).addClass("far fa-check-circle");
             setTimeout(() => {
-                $("i", this).removeClass("fa fa-check");
+                $("i", this).removeClass("far fa-check-circle");
                 $("i", this).addClass("fa fa-copy");
             }, 2000);
         });
