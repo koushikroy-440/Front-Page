@@ -39,6 +39,25 @@ const countClients = async (req, res) => {
     }
 }
 
+const allClients = async (req, res) => {
+    const tokenData = await tokenService.verify(req);
+    if (tokenData.isVerified) {
+
+        const query = {
+            companyId: req.params.companyId
+        }
+        const dbRes = await dbService.getRecordByQuery(query, 'client');
+        res.status(200);
+        res.json({
+            data: dbRes,
+        });
+
+    } else {
+        res.status(401);
+        res.json({ message: 'permission denied !' });
+    }
+}
+
 const paginate = async (req, res) => {
     const tokenData = await tokenService.verify(req);
     if (tokenData.isVerified) {
@@ -97,6 +116,7 @@ const updateClients = async (req, res) => {
 module.exports = {
     create: create,
     countClients: countClients,
+    allClients: allClients,
     paginate: paginate,
     deleteClients: deleteClients,
     updateClients: updateClients

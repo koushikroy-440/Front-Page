@@ -519,6 +519,51 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $("#all").click(async function (event) {
+        event.preventDefault();
+        const token = getCookie("authToken");
+        const company = decodeToken(token);
+        const companyId = company.data.companyInfo._id;
+        const clientRequest = {
+            type: "GET",
+            url: "/clients/all/" + companyId
+        }
+        const response = await ajax(clientRequest);
+        const allClients = JSON.stringify(response.data);
+        const formdata = new FormData();
+        formdata.append("data", allClients);
+        formdata.append("token", getCookie("authToken"));
+        const request = {
+            type: "POST",
+            url: "/export-to-pdf",
+            data: formdata
+        }
+        try {
+            const response = await ajax(request);
+            console.log(response);
+
+            const downloadRequest = {
+                type: "GET",
+                url: "/exports/" + response.filename
+            }
+
+            const pdfFile = await ajaxDownloader(downloadRequest);
+            const pdfUrl = URL.createObjectURL(pdfFile);
+            const a = document.createElement("a");
+            a.href = pdfUrl;
+            a.download = response.filename;
+            a.click();
+            a.remove();
+            deletePdf(response.filename);
+        }
+        catch (err) {
+            console.log(err);
+        }
+
+    });
+});
+
 async function deletePdf(filename) {
     const token = getCookie("authToken");
     const request = {

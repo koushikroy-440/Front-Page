@@ -9,6 +9,10 @@ router.get('/count-all', (req, res) => {
     clientController.countClients(req, res);
 });
 
+router.get('/all/:companyId', (req, res) => {
+    clientController.allClients(req, res);
+});
+
 router.get('/:from/:to', (req, res) => {
     clientController.paginate(req, res);
 });
