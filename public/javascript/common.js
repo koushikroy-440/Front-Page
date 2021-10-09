@@ -118,10 +118,12 @@ async function uploadFileOnS3(file) {
     }
 }
 
+
+
 function ajaxDownloader(request) {
     return $.ajax({
         type: request.type,
-        url: req.url,
+        url: request.url,
         xhr: function () {
             const xml = new XMLHttpRequest();
             xml.responseType = 'blob';

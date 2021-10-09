@@ -1,5 +1,7 @@
 // get country phone codes
 
+// const { deletePdf } = require("../../controller/pdf.controller");
+
 $(document).ready(function () {
     $("#country").on("input", async function () {
         let keyword = $(this).val().trim().toLowerCase();
@@ -476,14 +478,14 @@ function filterByEmail() {
  * * export all client data to pdf format
  */
 $(document).ready(function () {
-    $("#current").click(async function (event) {
-        event.preventDefault();
+    $("#current").click(async function (e) {
+        e.preventDefault();
         let currentClients = sessionStorage.getItem("current-clients");
         if (currentClients != null) {
             let clients = JSON.parse(currentClients);
-            let formData = new FormData();
+            const formData = new FormData();
             formData.append("data", clients);
-            formData.append("token", getCookie('authToken'));
+            formData.append("token", getCookie("authToken"));
             const request = {
                 type: "POST",
                 url: "/export-to-pdf",
@@ -491,22 +493,40 @@ $(document).ready(function () {
             }
             try {
                 const response = await ajax(request);
+                console.log(response);
                 const downloadRequest = {
                     type: "GET",
-                    url: "/exports/new.pdf"
+                    url: "/exports/" + response.fileName
                 }
+
                 const pdfFile = await ajaxDownloader(downloadRequest);
                 const pdfUrl = URL.createObjectURL(pdfFile);
                 const a = document.createElement("a");
                 a.href = pdfUrl;
-                a.download = "new.pdf";
+                a.download = response.fileName;
                 a.click();
                 a.remove();
-            } catch (err) {
+                deleteFile(response.fileName);
+            }
+            catch (err) {
                 console.log(err);
             }
-        } else {
-            alert('no clients data found');
+
+        }
+        else {
+            alert("Clients not found");
         }
     });
-})
+});
+
+async function deleteFile(fileName) {
+    const token = getCookie("authToken");
+    const request = {
+        type: "DELETE",
+        url: "/export-to-pdf" + fileName,
+        data: {
+            token: token
+        }
+    }
+    await ajax(request);
+}
