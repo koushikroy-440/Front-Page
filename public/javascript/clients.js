@@ -1,7 +1,4 @@
 // get country phone codes
-
-// const { deletePdf } = require("../../controller/pdf.controller");
-
 $(document).ready(function () {
     $("#country").on("input", async function () {
         let keyword = $(this).val().trim().toLowerCase();
@@ -27,7 +24,7 @@ $(document).ready(function () {
     });
 });
 
-//open modal 
+//*open modal 
 $(document).ready(() => {
     $("#add-client-btn").click(() => {
         $("#addClientForm").addClass("add-client-form");
@@ -37,7 +34,7 @@ $(document).ready(() => {
         addClient();
     });
 });
-// add client
+//* add client
 function addClient() {
     $(".add-client-form").submit(async function (e) {
         e.preventDefault();
@@ -74,7 +71,7 @@ function addClient() {
     });
 };
 
-// update client
+//*update client
 function updateClient(oldTr) {
     $(".update-client-form").submit(async function (e) {
         e.preventDefault();
@@ -101,7 +98,7 @@ function updateClient(oldTr) {
     });
 };
 
-// show clients
+//* show clients
 $(document).ready(function () {
     let from = 0;
     let to = 5;
@@ -128,7 +125,7 @@ async function showClients(from, to) {
         loaderBtn: ".clients-skeleton"
     }
     const response = await ajax(request);
-    // console.log(response);
+
     if (response.data.length > 0) {
 
         //* store client data in localStorage for export to pdf
@@ -289,6 +286,7 @@ function clientAction() {
     });
 }
 
+//* create dynamic element for show clients
 function dynamicTr(client) {
     let clientString = JSON.stringify(client);
     let clientData = clientString.replace(/"/g, "'");
@@ -539,6 +537,7 @@ $(document).ready(function () {
     });
 });
 
+//* export all clients details for pdf 
 $(document).ready(function () {
     $("#all").click(async function (event) {
         event.preventDefault();
@@ -584,6 +583,7 @@ $(document).ready(function () {
     });
 });
 
+//* delete pdf from database 
 async function deletePdf(filename) {
     const token = getCookie("authToken");
     const request = {

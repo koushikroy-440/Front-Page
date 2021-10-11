@@ -1,4 +1,4 @@
-// admin layout control
+//* admin layout control
 $(document).ready(function () {
   $(".toggler").click(function () {
     const state = $(".sidenav").hasClass("sidenav-open");
@@ -21,7 +21,7 @@ $(document).ready(function () {
   });
 });
 
-//show company info on client page
+//* show company info on client page
 $(document).ready(function () {
   const token = getCookie("authToken");
   const company = decodeToken(token).data.companyInfo;
@@ -37,7 +37,7 @@ $(document).ready(function () {
   }
 });
 
-//upload logo
+//*upload logo
 $(document).ready(function () {
   $(".uploader").toast('show');
   $(".logo-box").click(function () {
@@ -55,7 +55,7 @@ $(document).ready(function () {
     input.onchange = async function () {
       const file = input.files[0];
       const imageUrl = URL.createObjectURL(file);
-      //show uploader
+      //*show uploader
       $(".file-name").html(file.name);
       $(".uploader").removeClass('d-none');
       $(".uploader").addClass('animate__animated animated__slideInLeft');
@@ -79,7 +79,7 @@ $(document).ready(function () {
   });
 });
 
-//update user logo and request company api 
+//*update user logo and request company api 
 async function updateLogoUrl(url) {
   const token = getCookie("authToken");
   const company = decodeToken(token);

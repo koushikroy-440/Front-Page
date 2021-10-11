@@ -14,6 +14,7 @@ function getInvitation() {
     return inv.data;
 }
 
+//*client log-in request
 $(document).ready(function () {
     $("form").submit(async function (e) {
         e.preventDefault();

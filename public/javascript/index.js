@@ -1,4 +1,4 @@
-//redirect user if already logged 
+//*redirect user if already logged 
 
 if (document.cookie.indexOf("authToken") != -1) {
     window.location = "/clients";
@@ -6,7 +6,7 @@ if (document.cookie.indexOf("authToken") != -1) {
 
 
 
-//request for login modal
+//*request for login modal
 $(document).ready(() => {
     $("#request-login-modal").click((e) => {
         e.preventDefault();
@@ -15,7 +15,7 @@ $(document).ready(() => {
     });
 });
 
-//request for signup modal
+//*request for signup modal
 $(document).ready(() => {
     $("#request-signup-modal").click((e) => {
         e.preventDefault();
@@ -24,7 +24,7 @@ $(document).ready(() => {
     });
 });
 
-//signup request
+//*signup request
 $(document).ready(() => {
     $("#signUp-form").submit((e) => {
         e.preventDefault();
@@ -67,7 +67,7 @@ $(document).ready(() => {
     });
 });
 
-//login request
+//*login request
 $(document).ready(() => {
     $("#login-form").submit((e) => {
         e.preventDefault();

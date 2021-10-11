@@ -1,3 +1,4 @@
+//* aws s3 file upload
 const config = {
     accessKeyId: "AKIA2QE56KF5HU6JVWXU",
     secretAccessKey: "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",
@@ -49,7 +50,7 @@ function ajax(request) {
     });
 
 }
-//get cookie
+//*get cookie
 function getCookie(cookieName) {
     const allCookie = document.cookie;
     let cookies = allCookie.split(";");
@@ -65,7 +66,7 @@ function getCookie(cookieName) {
 }
 
 
-//formate date
+//*formate date
 function formatDate(dateString) {
     const date = new Date(dateString);
     let day = date.getDate();
@@ -82,7 +83,7 @@ function formatDate(dateString) {
     return day + "-" + month + "-" + year + " " + time;
 }
 
-//decode token
+//*decode token
 function decodeToken(token) {
     let playLoad = token.split(".")[1];
     let string = atob(playLoad);
@@ -90,7 +91,7 @@ function decodeToken(token) {
     return dataObject;
 }
 
-//upload file on AWS bucket
+//*upload file on AWS bucket
 async function uploadFileOnS3(file) {
     const fileInfo = {
         Key: file.name,
