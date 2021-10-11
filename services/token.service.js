@@ -4,19 +4,19 @@ const secretKey = process.env.SECRET_KEY;
 const issService = require("./iss.service");
 
 
-const create = async (req,expiresIn)=>{
+const create = async (req, expiresIn) => {
     const formData = req.body;
     const endpoint = req.get('origin');
     const api = req.originalUrl;
-    const iss = endpoint+api;
+    const iss = endpoint + api;
     const token = await jwt.sign({
         iss: iss,
         data: formData
-    },secretKey,{expiresIn:expiresIn});
+    }, secretKey, { expiresIn: expiresIn });
     return token;
 }
 
-const createCustomToken = async (data,expiresIn)=>{
+const createCustomToken = async (data, expiresIn) => {
     const formData = data.body;
     const endpoint = data.endpoint;
     const api = data.originalUrl;
@@ -24,53 +24,71 @@ const createCustomToken = async (data,expiresIn)=>{
     const token = await jwt.sign({
         iss: iss,
         data: formData
-    },secretKey,{expiresIn:expiresIn});
+    }, secretKey, { expiresIn: expiresIn });
     return token;
-  
+
 }
 
-const verify = (req)=>{
+const verify = (req) => {
     let token = "";
-    if(req.method == "GET"){
-        if(req.headers['x-auth-token']){
+    if (req.method == "GET") {
+        if (req.headers['x-auth-token']) {
             token = req.headers['x-auth-token'];
         }
-        else{
+        else {
             token = req.cookies.authToken;
         }
     }
-    else{
+    else {
         token = req.body.token;
     }
-    if(token){
-        try{
-           const tmp = jwt.verify(token,secretKey);
-        //    console.log(tmp);
-           const requestComingForm = tmp.iss;
-           if(issService.indexOf(requestComingForm) != -1)
-           {
+    if (token) {
+        try {
+            const tmp = jwt.verify(token, secretKey);
+            //    console.log(tmp);
+            const requestComingForm = tmp.iss;
+            if (issService.indexOf(requestComingForm) != -1) {
                 return {
                     isVerified: true,
                     data: tmp.data
                 };
-           }
-           
-        }catch(error){
+            }
+
+        } catch (error) {
             return {
                 isVerified: false,
             }
         }
     }
-    else{
+    else {
         return {
             isVerified: false,
         }
     }
-    
+
 }
 
+const customTokenVerification = (token) => {
+    try {
+        const tmp = jwt.verify(token, secretKey);
+        const requestComingForm = tmp.iss;
+        if (issService.indexOf(requestComingForm) != -1) {
+            return {
+                isVerified: true,
+                data: tmp.data
+            };
+        }
+
+    } catch (error) {
+        return {
+            isVerified: false,
+        }
+    }
+
+}
 module.exports = {
     create: create,
     verify: verify,
-    createCustomToken: createCustomToken
+    createCustomToken: createCustomToken,
+    customTokenVerification: customTokenVerification
 }

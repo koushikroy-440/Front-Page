@@ -113,11 +113,37 @@ const updateClients = async (req, res) => {
         });
     }
 }
+
+const invitation = async (req, res) => {
+    const token = req.params.clientToken;
+    const tokenData = await tokenService.customTokenVerification(token);
+    if (tokenData.isVerified) {
+        const clientId = tokenData.data.clientId;
+        const client = await getClientInfo(clientId);
+        if (!client.isUser) {
+            res.render("invitation");
+        } else {
+            res.redirect("/");
+        }
+    } else {
+        res.status(401);
+        res.redirect("/");
+    }
+}
+
+const getClientInfo = async (id) => {
+    const query = {
+        _id: id
+    }
+    const dataRes = await dbService.getRecordByQuery(query, 'client');
+    return dataRes[0];
+}
 module.exports = {
     create: create,
     countClients: countClients,
     allClients: allClients,
     paginate: paginate,
     deleteClients: deleteClients,
-    updateClients: updateClients
+    updateClients: updateClients,
+    invitation: invitation
 }

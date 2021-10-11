@@ -198,11 +198,31 @@ function clientAction() {
 
     //* open share modal
     $(document).ready(function () {
-        $(".share-client").click(function () {
+        $(".share-client").click(async function () {
             const clientId = $(this).data('id');
             const clientEmail = $(this).data('email');
             $(".share-on-email").attr('data-email', clientEmail);
-            let link = `${window.location}/invitation/${clientId}`;
+            const companyToken = getCookie("authToken");
+            const temp = decodeToken(companyToken);
+            const company = temp.data.companyInfo;
+
+            const prepareDataForToken = JSON.stringify({
+                clientId: clientId,
+                companyName: company.company_name,
+                email: company.email,
+                logo: company.logoUrl
+            });
+            const formData = new FormData();
+            formData.append("token", getCookie("authToken"));
+            formData.append("data", prepareDataForToken);
+            const request = {
+                type: "POST",
+                url: "/get-token/172800",
+                data: formData,
+            }
+            const response = await ajax(request);
+            const token = response.token;
+            let link = `${window.location}/invitation/${token}`;
             $(".link").val(link);
             $("#shareModal").modal('show');
         });

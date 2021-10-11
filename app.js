@@ -18,6 +18,7 @@ const logoutRoute = require("./routes/logout.router");
 const clintRouter = require("./routes/clients.router");
 const sendmailRouter = require("./routes/sendmail.router");
 const exporterRouter = require("./routes/exporter.router");
+const tokenRouter = require("./routes/token.router");
 const { application } = require('express');
 const app = express();
 
@@ -68,7 +69,7 @@ app.use('/clients', clintRouter);
 app.use('/profile', autoLogger(), profileRoute);
 app.use('/sendmail', sendmailRouter);
 app.use('/export-to-pdf', exporterRouter);
-
+app.use('/get-token', tokenRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

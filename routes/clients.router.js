@@ -9,6 +9,10 @@ router.get('/count-all', (req, res) => {
     clientController.countClients(req, res);
 });
 
+router.get('/invitation/:clientToken', (req, res) => {
+    clientController.invitation(req, res);
+});
+
 router.get('/all/:companyId', (req, res) => {
     clientController.allClients(req, res);
 });

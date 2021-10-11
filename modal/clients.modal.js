@@ -7,6 +7,10 @@ const clientSchema = new Schema({
     clientEmail: String,
     clientCountry: String,
     clientMobile: Number,
+    isUser: {
+        type: Boolean,
+        default: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now
