@@ -24,6 +24,7 @@ const create = async (req, res) => {
             token.data['token'] = newToken;
             token.data['expiresIn'] = 86400;
             token.data['isLogged'] = true;
+            token.data['role'] = 'admin';
             //end auto login
             const userRes = await databaseService.createRecord(token.data, 'user');
             res.status(200);

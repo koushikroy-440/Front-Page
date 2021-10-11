@@ -25,6 +25,10 @@ router.post('/', (req, res) => {
     clientController.create(req, res);
 });
 
+router.post('/:id', (req, res) => {
+    clientController.createUser(req, res);
+});
+
 router.delete('/:id', (req, res) => {
     clientController.deleteClients(req, res);
 });

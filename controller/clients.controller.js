@@ -138,6 +138,28 @@ const getClientInfo = async (id) => {
     const dataRes = await dbService.getRecordByQuery(query, 'client');
     return dataRes[0];
 }
+
+const createUser = async (req, res) => {
+    const query = {
+        _id: req.params.id
+    }
+    const updateMe = {
+        updatedAt: Date.now(),
+        isUser: true
+    }
+    await dbService.updateByQuery(query, 'client', updateMe);
+    const userData = {
+        uid: req.params.uid,
+        password: req.body.password,
+        role: "client"
+    }
+
+    await dbService.createRecord(userData, 'user');
+
+    res.status(200);
+    res.json({ success: 'success' });
+
+}
 module.exports = {
     create: create,
     countClients: countClients,
@@ -145,5 +167,6 @@ module.exports = {
     paginate: paginate,
     deleteClients: deleteClients,
     updateClients: updateClients,
-    invitation: invitation
+    invitation: invitation,
+    createUser: createUser
 }

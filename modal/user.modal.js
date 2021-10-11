@@ -3,22 +3,23 @@ const bcryptService = require('../services/bcrypt.service');
 const { Schema } = mongo;
 
 const userSchema = new Schema({
-    uid:{
+    uid: {
         type: String,
         unique: true
     },
-    password:{
+    password: {
         type: String,
-        require: [true,"password field is required"]
+        require: [true, "password field is required"]
     },
     token: String,
     expiresIn: Number,
     isLogged: Boolean,
-    createdAt:{
+    role: String,
+    createdAt: {
         type: Date,
         default: Date.now
     },
-    updatedAt:{
+    updatedAt: {
         type: Date,
         default: Date.now
     }
@@ -31,4 +32,4 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-module.exports = mongo.model("User",userSchema);
+module.exports = mongo.model("User", userSchema);

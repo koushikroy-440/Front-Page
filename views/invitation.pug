@@ -1,1 +1,36 @@
-h1 success
+doctype html
+html
+  head
+    title Homepage
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="/bootstrap/bootstrap.min.css")
+    link(rel="stylesheet" href="/bootstrap/animate.min.css")
+    script(src="/bootstrap/jquery.min.js")
+    script(src="/bootstrap/popper.min.js")
+    script(src="/bootstrap/bootstrap.min.js")
+    script(src="https://sdk.amazonaws.com/js/aws-sdk-2.985.0.min.js")
+    script(src="/javascript/common.js")
+    script(src="/javascript/invitation.js")
+    
+  body.bg-light
+    div.container
+      div.row
+        div.col-md-3
+        div.col-md-6
+          div.card.p-2.animate__animated.animate__slideInDown.shadow.my-5
+            div.card-body.text-center
+              img.logo(width='80')
+              h1.card-title.text-capitalize.my-2.company-name
+              p.email
+              h5.text-left Hi,
+              p.text-justify
+                | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
+              h5.text-left Password
+              form.text-left
+                input.form-control.my-3(placeholder='Enter new password' name="password")
+                button.btn.btn-primary(type='submit') Accept
+        div.col-md-3
+    
+  
+    
