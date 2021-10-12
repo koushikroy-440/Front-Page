@@ -160,6 +160,37 @@ const createUser = async (req, res) => {
     res.json({ success: 'success' });
 
 }
+
+const getClientsId = async (req, res) => {
+    const token = tokenService.verify(req);
+    if (token.isVerified) {
+        const query = {
+            clientEmail: token.data.email,
+        }
+        const companyRes = await dbService.getRecordByQuery(query, 'client');
+        if (companyRes.length > 0) {
+            res.status(200);
+            res.json({
+                isCompanyExist: true,
+                message: "company available",
+                data: companyRes
+            });
+        } else {
+            res.status(404);
+            res.json({
+                isCompanyExist: false,
+                message: "company not exists",
+            });
+        }
+    }
+    else {
+        res.status(401);
+        res.json({
+            message: "Permission denied",
+        });
+    }
+
+}
 module.exports = {
     create: create,
     countClients: countClients,
@@ -168,5 +199,6 @@ module.exports = {
     deleteClients: deleteClients,
     updateClients: updateClients,
     invitation: invitation,
-    createUser: createUser
+    createUser: createUser,
+    getClientsId: getClientsId
 }

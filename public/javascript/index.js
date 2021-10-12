@@ -67,6 +67,15 @@ $(document).ready(() => {
     });
 });
 
+//*enable and disable login button
+$(document).ready(function () {
+    $(".login-as").each(function () {
+        $(this).on('change', function () {
+            $(".login-btn").prop('disabled', false);
+        });
+    })
+});
+
 //*login request
 $(document).ready(() => {
     $("#login-form").submit((e) => {

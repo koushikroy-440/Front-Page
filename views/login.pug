@@ -25,10 +25,24 @@ div.modal.animate__animated.animate__fadeInDown#login-modal
                                     class="company-password"
                                     )
                                 span.text-danger.password-err
+                            div.mb-4.d-flex
+                                div.custom-control.custom-radio.custom-control-inline
+                                    input#admin.login-as.custom-control-input(type='radio' name='loginAs' value='admin')
+                                    label.custom-control-label(for='admin') Admin
+
+                                div.custom-control.custom-radio.custom-control-inline
+                                    input#client.login-as.custom-control-input(type='radio' name='loginAs' value='client')
+                                    label.custom-control-label(for='client') Client
+
+                                div.custom-control.custom-radio.custom-control-inline
+                                    input#team.login-as.custom-control-input(type='radio' name='loginAs' value='team')
+                                    label.custom-control-label(for='team') Team
 
                             div.form-group.mb-4
                                 button.btn.btn-primary.text-light.login-btn(
                                     type="submit"
+                                    style="background-color:#377DFF;color:white"
+                                    disabled="true"
                                 ) login
                                 button.btn.btn-primary.disabled.before-send.d-none
                                     span.spinner-grow.spinner-grow-sm.mr-2
