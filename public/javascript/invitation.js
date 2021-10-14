@@ -19,14 +19,16 @@ $(document).ready(function () {
     $("form").submit(async function (e) {
         e.preventDefault();
         const inv = getInvitation();
-        const formData = new FormData();
+        const formData = new FormData(this);
         formData.append("token", inv.token);
         const request = {
             type: "POST",
             url: "/clients/" + inv.clientId,
             data: formData
         }
-        const response = await ajax(request);
+        await ajax(request);
         window.location = '/';
     });
 });
+
+

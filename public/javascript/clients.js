@@ -493,7 +493,7 @@ function filterByEmail() {
 }
 
 /**
- * * export all client data to pdf format
+ * * export  client data to pdf format
  */
 $(document).ready(function () {
     $("#current").click(async function (e) {

@@ -9,6 +9,7 @@ const config = {
 }
 
 const s3 = new AWS.S3(config);
+//* ajax request
 function ajax(request) {
     return new Promise(function (resolve, reject) {
         let options = {
@@ -119,8 +120,7 @@ async function uploadFileOnS3(file) {
     }
 }
 
-
-
+//* function for pdf download
 function ajaxDownloader(request) {
     return $.ajax({
         type: request.type,
