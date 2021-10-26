@@ -10,12 +10,13 @@ const options = {
     // useUnifiedTopology: true,
     // useCreateIndex: true,
 };
+mongo.connect(url, options);
+
 const schemaList = {
     company: companySchema,
     user: userSchema,
     client: clientSchema
 }
-mongo.connect(url, options);
 
 const createRecord = async (data, schema) => {
     const currentSchema = schemaList[schema];

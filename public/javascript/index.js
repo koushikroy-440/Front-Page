@@ -4,8 +4,6 @@ if (document.cookie.indexOf("authToken") != -1) {
     window.location = "/clients";
 }
 
-
-
 //*request for login modal
 $(document).ready(() => {
     $("#request-login-modal").click((e) => {
