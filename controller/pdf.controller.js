@@ -3,7 +3,6 @@ const fs = require("fs");
 const crypto = require("crypto");
 let random = crypto.randomBytes(4).toString('hex');
 const tokenService = require("../services/token.service");
-
 const pdf = async (req, res) => {
     let pdfFile = "public/exports/" + random + ".pdf";
     let commingData = req.body;

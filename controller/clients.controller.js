@@ -149,7 +149,7 @@ const createUser = async (req, res) => {
     }
     await dbService.updateByQuery(query, 'client', updateMe);
     const userData = {
-        uid: req.params.uid,
+        uid: req.params.id,
         password: req.body.password,
         role: "client"
     }

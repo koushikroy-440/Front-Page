@@ -97,26 +97,26 @@ $(document).ready(() => {
                 }
             },
             error: (error) => {
-                console.log(error);
+                // console.log(error);
 
-                // $(".before-send").addClass("d-none");
-                // $(".login-btn").removeClass("d-none");
+                $(".before-send").addClass("d-none");
+                $(".login-btn").removeClass("d-none");
 
-                // if (error.status == 404) {
-                //     $(".username").addClass('border border-danger');
-                //     $('.username-err').html('company not found !');
-                // }
-                // else if (error.status = 401) {
-                //     $(".company-password").addClass("border border-danger");
-                //     $(".password-err").html("incorrect password !")
-                // }
-                // else if (error.status = 406) {
-                //     $(".company-password").addClass("border border-danger");
-                //     $(".password-err").html("please logout from other device");
-                // }
-                // else {
-                //     alert('some thing went wrong please try after sometime later');
-                // }
+                if (error.status == 404) {
+                    $(".username").addClass('border border-danger');
+                    $('.username-err').html('company not found !');
+                }
+                else if (error.status = 401) {
+                    $(".company-password").addClass("border border-danger");
+                    $(".password-err").html("incorrect password !")
+                }
+                else if (error.status = 406) {
+                    $(".company-password").addClass("border border-danger");
+                    $(".password-err").html("please logout from other device");
+                }
+                else {
+                    alert('some thing went wrong please try after sometime later');
+                }
             }
         });
     });
