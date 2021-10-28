@@ -1,5 +1,7 @@
 const router = require('express').Router();
-router.get('/', (req, res) => {
+const routePermission = require('../middleware/route-permission.middleware');
+
+router.get('/', routePermission, (req, res) => {
     res.render("business");
 });
 

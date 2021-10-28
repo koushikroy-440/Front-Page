@@ -1,1 +1,20 @@
-h1 business
+include profile
+  
+  block loadStyle
+    link(rel="stylesheet" href="stylesheets/clients.css")
+
+  block loadScript
+    //script(src="javascripts/clients.js")
+
+  block content
+    p.medium-font.p-0 Business
+    div.card.container-fluid.p-3.border-none
+      div.card-body
+        table.table
+          tr
+            th Companies
+            th Email
+            th Mobile
+            th Status
+            th Date
+            th Action

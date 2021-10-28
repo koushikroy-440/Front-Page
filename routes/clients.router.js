@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const clientController = require('../controller/clients.controller');
-router.get('/', (req, res) => {
+const routePermission = require('../middleware/route-permission.middleware');
+router.get('/', routePermission, (req, res) => {
     res.render('clients');
 });
 

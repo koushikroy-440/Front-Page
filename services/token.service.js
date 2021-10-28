@@ -36,7 +36,12 @@ const verify = (req) => {
             token = req.headers['x-auth-token'];
         }
         else {
-            token = req.cookies.authToken;
+            if (req.originalUrl.indexOf("/clients/invitation") != -1) {
+                let temp = req.originalUrl.split("/");
+                token = temp[3];
+            } else {
+                token = req.cookies.authToken;
+            }
         }
     }
     else {

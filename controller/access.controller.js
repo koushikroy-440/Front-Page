@@ -11,7 +11,11 @@ const accessList = {
         ]
 
     },
-    client: {},
+    client: {
+        toolbar: [
+            { label: "Logout", icon: "fa fa-sign-out-alt", link: "/logout", design: "icon-btn-danger" }
+        ]
+    },
     team: {}
 }
 const getAccess = async (req, res) => {

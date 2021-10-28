@@ -21,6 +21,8 @@ const exporterRouter = require("./routes/exporter.router");
 const tokenRouter = require("./routes/token.router");
 const accessRouter = require("./routes/access.router");
 const businessRouter = require("./routes/business.router");
+const notFoundRouter = require("./routes/notFound.router");
+
 
 const { application } = require('express');
 const app = express();
@@ -38,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/signup', signupRouter);
 app.use('/api/login', loginRouter);
-
+app.use('/pageNotFound', notFoundRouter);
 // !implementing api security
 app.use((req, res, next) => {
   const token = tokenService.verify(req);

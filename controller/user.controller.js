@@ -11,6 +11,7 @@ const create = async (req, res) => {
             const uidJson = {
                 uid: token.data.uid,
                 companyInfo: token.data.companyInfo,
+                role: 'admin'
             }
             const endpoint = req.get('origin') || "http://" + req.get('host');
             const option = {
