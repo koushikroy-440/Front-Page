@@ -12,7 +12,7 @@ html
     block loadScript
     block loadStyle
   body(style="background:#F2F2F2")
-    - const toolbar = [{label:"Notifications",icon:"fa fa-bell",link:"/notifications",design:"icon-btn-dark"},{label:"Clients",icon:"fas fa-user-secret",link:"/clients",design:"icon-btn-primary"},{label:"Teams",icon:"fas fa-users",link:"/teams",design:"icon-btn-warning"},{label:"Setting",icon:"fa fa-cog",link:"/setting",design:"icon-btn-info"},{label:"Logout",icon:"fa fa-sign-out-alt",link:"/logout",design:"icon-btn-danger"}]
+
     div
       div.sidenav.sidenav-open
         div.d-flex.flex-column.align-items-center.my-4.overflow-hidden
@@ -25,12 +25,8 @@ html
         nav.navbar.navbar-expand-sm.bg-white.px-3.py-2
           button.btn.toggler
             i.fa.fa-align-left
-          ul.navbar-nav.ml-auto
-            each menu of toolbar
-              li.nav-item
-                button.btn.toolbar.ml-3.p-0(class=menu.design)
-                  a.nav-link(href=menu.link class=menu.design)
-                    i(class=menu.icon)
+          ul.navbar-nav.ml-auto#toolbar
+            
         include toast
         div.px-4.py-3
           block content

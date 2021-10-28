@@ -1,3 +1,28 @@
+//*show toolbar
+$(document).ready(async function () {
+  const request = {
+    type: "GET",
+    url: "/access"
+  }
+  const response = await ajax(request);
+  showToolbar(response.data.toolbar);
+});
+
+function showToolbar(toolbar) {
+  for (let menu of toolbar) {
+    let li = `
+      <li class="nav-item">
+        <button class="btn toolbar ml-3 p-0 ${menu.design}">
+          <a href="${menu.link}" class="${menu.design}">
+            <i class="${menu.icon}"></i>
+          </a>
+        </button>
+      </li>
+    `;
+    $("#toolbar").append(li);
+  }
+}
+
 //* admin layout control
 $(document).ready(function () {
   $(".toggler").click(function () {

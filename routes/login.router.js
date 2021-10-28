@@ -45,7 +45,9 @@ const adminLogger = async (req, res) => {
             api: '/api/private/user',
             data: uidToken
         });
-
+        //update role in authToken
+        const role = passwordRes.body.data[0].role;
+        query.body['role'] = role;
         //get user password 
 
         if (passwordRes.body.isCompanyExist) {
@@ -110,7 +112,7 @@ const clientLogger = async (req, res) => {
         const query = {
             body: {
                 uid: companyRes.body.data[0]._id,
-                companyInfo: companyRes.body.data[0]
+                clientInfo: companyRes.body.data[0]
             },
             endpoint: req.get('origin'),
             api: "/api/private/user",
@@ -122,6 +124,9 @@ const clientLogger = async (req, res) => {
             api: '/api/private/user',
             data: uidToken
         });
+        //update role in authToken
+        const role = passwordRes.body.data[0].role;
+        query.body['role'] = role;
 
         //get user password 
 
@@ -199,7 +204,9 @@ const teamLogger = async (req, res) => {
             api: '/api/private/user',
             data: uidToken
         });
-
+        //update role in authToken
+        const role = passwordRes.body.data[0].role;
+        query.body['role'] = role;
         //get user password 
 
         if (passwordRes.body.isCompanyExist) {
