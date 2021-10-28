@@ -76,12 +76,14 @@ const adminLogger = async (req, res) => {
                 res.cookie("authToken", authToken, { maxAge: (secondsInSevenDays * 1000) });
                 res.status(200);
                 res.json({
+                    role: 'admin',
                     isLogged: true,
                     message: 'success'
                 });
             } else {
                 res.status(401),
                     res.json({
+
                         isLogged: false,
                         message: 'wrong password'
                     });
@@ -156,6 +158,7 @@ const clientLogger = async (req, res) => {
                 res.cookie("authToken", authToken, { maxAge: (secondsInSevenDays * 1000) });
                 res.status(200);
                 res.json({
+                    role: 'client',
                     isLogged: true,
                     message: 'success'
                 });
@@ -235,6 +238,7 @@ const teamLogger = async (req, res) => {
                 res.cookie("authToken", authToken, { maxAge: (secondsInSevenDays * 1000) });
                 res.status(200);
                 res.json({
+                    role: 'team',
                     isLogged: true,
                     message: 'success'
                 });

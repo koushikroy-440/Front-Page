@@ -89,8 +89,18 @@ $(document).ready(() => {
                 $(".login-btn").addClass("d-none");
             },
             success: (response) => {
+
+                //*control profile 
+
                 if (response.isLogged) {
-                    window.location = "/clients";
+                    if (response.role == 'admin') {
+                        window.location = "/clients";
+                    } else if (response.role == 'client') {
+                        window.location = "/business";
+                    } else {
+                        //team
+                    }
+
                 } else {
                     $(".company-password").addClass("border border-danger");
                     $(".password-err").html("incorrect password !")
