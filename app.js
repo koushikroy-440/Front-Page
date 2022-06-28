@@ -22,7 +22,8 @@ const tokenRouter = require("./routes/token.router");
 const accessRouter = require("./routes/access.router");
 const businessRouter = require("./routes/business.router");
 const notFoundRouter = require("./routes/notFound.router");
-
+const teamRouter = require("./routes/team.router");
+const taskRouter = require("./routes/task.router");
 
 const { application } = require('express');
 const app = express();
@@ -77,6 +78,8 @@ app.use('/export-to-pdf', exporterRouter);
 app.use('/get-token', tokenRouter);
 app.use('/access', accessRouter);
 app.use('/business', businessRouter);
+app.use('/teams', teamRouter);
+app.use('/task', taskRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     const expiresIn = 120;
     const token = await tokenService.create(req, expiresIn);
 
-    //request company api 
+    //request company api  
     const companyRes = await httpService.postRequest({
         endpoint: req.get('origin'),
         api: "/api/private/company",

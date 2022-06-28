@@ -2,9 +2,11 @@ const mongo = require('mongoose');
 const companySchema = require("../modal/company.modal");
 const userSchema = require("../modal/user.modal");
 const clientSchema = require("../modal/clients.modal");
+const taskSchema = require("../modal/task.modal");
 
 // const url = "mongodb://localhost:27017/test";
-const url = "mongodb+srv://frontPage:LUdWbzHRTdnrZECU@cluster0.ywh68.mongodb.net/frontPage?retryWrites=true&w=majority";
+// const url = "mongodb+srv://frontPage:LUdWbzHRTdnrZECU@cluster0.ywh68.mongodb.net/frontPage?retryWrites=true&w=majority";
+const url = "mongodb+srv://koushik:LEUSwr2NTxUaIjfw@cluster0.umxbq.mongodb.net/frontPage?retryWrites=true&w=majority";
 const options = {
     // useNewUrlParse: true,
     // useUnifiedTopology: true,
@@ -15,7 +17,8 @@ mongo.connect(url, options);
 const schemaList = {
     company: companySchema,
     user: userSchema,
-    client: clientSchema
+    client: clientSchema,
+    task: taskSchema
 }
 
 const createRecord = async (data, schema) => {
@@ -61,6 +64,12 @@ const updateClients = async (id, data, schema) => {
     return dataRes;
 }
 
+const getAllData = async (schema) => {
+    const currentSchema = schemaList[schema];
+    const dataRes = await currentSchema.find();
+    return dataRes;
+}
+
 module.exports = {
     createRecord: createRecord,
     getRecordByQuery: getRecordByQuery,
@@ -68,5 +77,6 @@ module.exports = {
     countData: countData,
     paginate: paginate,
     deleteClients: deleteClients,
-    updateClients: updateClients
+    updateClients: updateClients,
+    getAllData: getAllData
 }

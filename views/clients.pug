@@ -91,4 +91,13 @@ include profile
                 img(src="images/whatsapp.png")
             div.progressive-loading.d-none
               div.moving-progress
+    div.modal.animate__animated.animate__slideInDown.animate__faster#taskModal
+      div.modal-dialog.modal-dialog-centered
+        div.modal-content.border-none
+          div.modal-body.px-4.py-4
+            h4.medium-font.mb-4 Add Task
+            form#addTaskForm
+              div.form-group.mb-4
+                input.input.form-control.taskDescription.remove-focus(name="task",placeholder="Add Task") 
+              button.btn.btn-primary.add-client-task(type="submit") Add  
               

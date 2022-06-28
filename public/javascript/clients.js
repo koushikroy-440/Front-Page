@@ -71,6 +71,39 @@ function addClient() {
     });
 };
 
+function addTask(clientString) {
+    $(".add-client-task").click(async function (e) {
+        console.log("Uviuvigvig")
+        e.preventDefault();
+        const tr = this.parentElement.parentElement.parentElement
+        let clientData = clientString.replace(/'/g, '"');
+        let client = JSON.parse(clientData);
+        const token = getCookie("authToken");
+        const formdata = new FormData();
+        let value = $(".taskDescription").val()
+        // $("#addTaskForm").reset()
+        $(".taskDescription").val("")
+        formdata.append("taskDescription", value);
+        formdata.append("assignTo", client._id);
+        formdata.append("name", client.clientName)
+        formdata.append("token", token);
+        console.log(client);
+        const request = {
+            type: "POST",
+            url: "/task",
+            isLoader: true,
+            commonBtn: ".add-client-Submit",
+            loaderBtn: ".add-client-loader",
+            data: formdata,
+        }
+        const response = await ajax(request);
+        console.log(response);
+        $("#taskModal").modal('hide');
+
+    })
+
+}
+
 //*update client
 function updateClient(oldTr) {
     $(".update-client-form").submit(async function (e) {
@@ -112,9 +145,9 @@ async function showClients(from, to) {
             <th>Client</th>
             <th>Email</th>
             <th>Mobile</th>
-            <th>Status</th>
             <th>Date</th>
             <th>Action</th>
+            <th>Assign Task</th>
         </tr>
     `);
     const request = {
@@ -168,6 +201,18 @@ function clientAction() {
             });
         });
     });
+
+    //add task
+    $(document).ready(function () {
+        $(".add-task").each(function () {
+            $(this).click(function () {
+                const client = $(this).data("client");
+                $("#addTaskForm").addClass("add-task-form")
+                $("#taskModal").modal('show');
+                addTask(client)
+            })
+        })
+    })
 
     //* edit clients
     $(document).ready(function () {
@@ -288,6 +333,8 @@ function clientAction() {
 
 //* create dynamic element for show clients
 function dynamicTr(client) {
+    // alert("Hi")
+
     let clientString = JSON.stringify(client);
     let clientData = clientString.replace(/"/g, "'");
 
@@ -309,9 +356,6 @@ function dynamicTr(client) {
           ${client.clientMobile}
         </td>
         <td>
-          <span class="badge badge-danger">Offline</span>
-        </td>
-        <td>
           ${formatDate(client.createdAt)}
         </td>
         <td>
@@ -328,6 +372,11 @@ function dynamicTr(client) {
               <i class="fa fa-share-alt"></i>
             </button>
           </div>
+        </td>
+        <td>
+            <button class="icon-btn-warning mr-3 add-task" data-id="${client._id}" data-client="${clientData}">
+                <i class="fa fa-plus"></i>
+            </button>
         </td>
       </tr>
     `;

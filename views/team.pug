@@ -1,0 +1,20 @@
+include profile
+  block loadStyle
+    link(rel="stylesheet" href="stylesheets/clients.css")
+
+  block loadScript
+    script(src="javascript/teams.js")
+
+  
+
+  block content
+  p.medium-font.p-0 Teams
+  div.card.container-fluid.p-3.border-none
+    div.card-body
+      table.table
+        tr
+          th Id
+          th Task Description
+          th Date
+          th Current Status
+          th Action
